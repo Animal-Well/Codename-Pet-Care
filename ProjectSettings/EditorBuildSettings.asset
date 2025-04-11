@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Minigame Arrumar.unity
+    guid: 7bdc8a4d5cc2dda4983194da935d1e67
+  - enabled: 1
+    path: Assets/Scenes/Minigame Caminhar.unity
+    guid: 79bc46612bc4c4a438885f392a42937b
+  - enabled: 1
+    path: Assets/Scenes/Minigame Limpar.unity
+    guid: 8d50b09af23d8a5469dbcf7709192ea0
   m_configObjects: {}
