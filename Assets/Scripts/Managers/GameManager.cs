@@ -8,8 +8,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance_GameManager { get; private set; }
 
     public UI_Manager ui_manager;
+    public PlayerBehaviour player;
 
     public int energy = 3, money = 0, maxEnergy = 3;
+    public int level = 0;
+    public float xpPoints = 0f, xpToLvlUp = 100f;
     private void Awake()
     {
         if (Instance_GameManager == null)
@@ -25,6 +28,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ui_manager = FindFirstObjectByType<UI_Manager>();
+        player = FindFirstObjectByType<PlayerBehaviour>();
     }
     private void Update()
     {
@@ -64,6 +68,40 @@ public class GameManager : MonoBehaviour
             GameObject.Find("Purchase Error").SetActive(true);
         }
     }
+
+    public void LevelUp(int xpGained)
+    {
+        if (xpPoints == xpToLvlUp)
+        {
+            level++;
+            xpPoints = 0;
+            ui_manager.UpdateLevel();
+            MaxXpUpdate();
+        }
+        else if (xpPoints > xpToLvlUp)
+        {
+            level++;
+            xpPoints = xpPoints - xpToLvlUp;
+            ui_manager.UpdateLevel();
+            LevelUp(0);
+            MaxXpUpdate();
+        }
+        else if (xpPoints < xpToLvlUp)
+        {
+            xpPoints += xpGained;
+            LevelUp(0);
+        }
+    }
+    public void MaxXpUpdate()
+    {
+        if (level == 0)
+            xpToLvlUp = 100f;
+        else
+        {
+            xpToLvlUp = xpToLvlUp + level;
+        }
+    }
+
     public void ChangeScene(string newScene)
     {
         SceneManager.LoadScene(newScene);
