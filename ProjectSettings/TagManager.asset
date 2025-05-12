@@ -8,6 +8,8 @@ TagManager:
   - Money
   - Energy
   - SelectIndicator
+  - RightSideScreen
+  - LeftSideScreen
   layers:
   - Default
   - TransparentFX

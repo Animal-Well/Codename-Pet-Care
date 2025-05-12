@@ -12,7 +12,7 @@ public class UI_Manager : MonoBehaviour
     public GameManager gameManager;
 
     public PlayerBehaviour player;
-    public Transform joystick;
+    public Rigidbody2D joystick;
 
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI energyText;
@@ -46,7 +46,7 @@ public class UI_Manager : MonoBehaviour
 
     void Update()
     {
-        UseJoystick();
+        //UseJoystick();
     }
 
     public void UpdateText()
@@ -71,23 +71,12 @@ public class UI_Manager : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+            Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
 
-            /*Vector2 move = new Vector2(touchPos.x, touchPos.y);
-            joystick.position = new Vector2(Mathf.Clamp(move.x, -50f,50f), 0f);
-            Debug.Log(touch.position + "     TouchPos:" + touchPos + "     Move:" + move);*/
+            //joystick.localPosition = new Vector3((Mathf.MoveTowards(joystick.localPosition.x, touch.position.x, 2f), (Mathf.MoveTowards(joystick.localPosition.y, touch.position.y, 2f), 2f * Time.deltaTime)));
+            //joystick.localPosition = Vector3.Lerp(joystick.localPosition, new Vector3(touch.position.x - 500f, touch.position.y -500f, 0f), 2f * Time.deltaTime);
         }
-            /*
-            _controller.Move(Vector3.forward * speed * Time.deltaTime);
-                
-                
-                _controller.Move(move * speed * Time.deltaTime);
-
-                Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-                Vector3 move = new Vector3(touchPos.x, 0f, 1f);
-                _controller.Move(move * speed * Time.deltaTime);
-                Debug.Log(touch.position + "     TouchPos:" + touchPos + "     Move:" + move);
-            */
-        }
-
+        else { }
+            //joystick.localPosition = Vector3.zero;
+    }
 }
