@@ -1,18 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class UI_Manager : MonoBehaviour
 {
     public static UI_Manager Instance_UI_Manager { get; private set; }
 
     public GameManager gameManager;
-
-    public PlayerBehaviour player;
-    public Rigidbody2D joystick;
 
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI energyText;
@@ -52,14 +47,11 @@ public class UI_Manager : MonoBehaviour
     public void UpdateText()
     {
         moneyText.text = gameManager.money.ToString();
-        energyText.text = gameManager.energy.ToString() + "/3";
+        energyText.text = $"{gameManager.energy}/{gameManager.maxEnergy}";
     }
     public void UpdateLevel()
     {
-        if(gameManager.level > 9)
-            playerLevelText.text = gameManager.level.ToString();
-        else if(gameManager.level < 10)
-            playerLevelText.text = "0" + gameManager.level.ToString();
+        playerLevelText.text = gameManager.level.ToString();
     }
     public void ChangeSelected(Transform referenceTransform)
     {
