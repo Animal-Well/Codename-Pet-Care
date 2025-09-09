@@ -7,14 +7,13 @@ public class UI_Manager : MonoBehaviour
 {
     public static UI_Manager Instance_UI_Manager { get; private set; }
 
-    public GameManager gameManager;
+    public static GameManager gameManager = GameManager.Instance_GameManager;
 
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI energyText;
     public TextMeshProUGUI playerLevelText;
 
-    public Transform selectedScreenIndicator;
-
+    public SelectedScreen selectedScreen;
     private void Awake()
     {
                 //  Não tenho certeza se vai ser necessario manter isso como um "Manager"
@@ -35,8 +34,8 @@ public class UI_Manager : MonoBehaviour
         gameManager = FindFirstObjectByType<GameManager>();
         moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
         energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
-        selectedScreenIndicator = GameObject.FindGameObjectWithTag("SelectIndicator").GetComponent<Transform>();
         UpdateText();
+        UpdateLevel();
     }
 
     void Update()
@@ -52,23 +51,5 @@ public class UI_Manager : MonoBehaviour
     public void UpdateLevel()
     {
         playerLevelText.text = gameManager.level.ToString();
-    }
-    public void ChangeSelected(Transform referenceTransform)
-    {
-        selectedScreenIndicator.position = referenceTransform.position;
-    }
-
-    void UseJoystick()
-    {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-
-            //joystick.localPosition = new Vector3((Mathf.MoveTowards(joystick.localPosition.x, touch.position.x, 2f), (Mathf.MoveTowards(joystick.localPosition.y, touch.position.y, 2f), 2f * Time.deltaTime)));
-            //joystick.localPosition = Vector3.Lerp(joystick.localPosition, new Vector3(touch.position.x - 500f, touch.position.y -500f, 0f), 2f * Time.deltaTime);
-        }
-        else { }
-            //joystick.localPosition = Vector3.zero;
     }
 }
