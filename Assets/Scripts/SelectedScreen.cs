@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System;
 using UnityEngine;
 
@@ -13,10 +12,6 @@ public class SelectedScreen : MonoBehaviour
         public Transform button;
     }
     public SelectableScreens[] screens;
-    private void Awake()
-    {
-        manager.selectedScreen = this;
-    }
     public void OnSelected(string newSelection)
     {
         for(int i = 0; i < screens.Length; i++)

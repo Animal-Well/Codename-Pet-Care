@@ -13,7 +13,6 @@ public class UI_Manager : MonoBehaviour
     public TextMeshProUGUI energyText;
     public TextMeshProUGUI playerLevelText;
 
-    public SelectedScreen selectedScreen;
     private void Awake()
     {
                 //  Não tenho certeza se vai ser necessario manter isso como um "Manager"
@@ -27,20 +26,19 @@ public class UI_Manager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+        gameManager = GameManager.Instance_GameManager;
     }
     void Start()
     {
-        gameManager = FindFirstObjectByType<GameManager>();
         moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
         energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
-        UpdateText();
-        UpdateLevel();
     }
 
     void Update()
     {
         //UseJoystick();
+        UpdateText();
+        UpdateLevel();
     }
 
     public void UpdateText()

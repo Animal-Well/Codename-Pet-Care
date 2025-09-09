@@ -38,36 +38,6 @@ public class GameManager : MonoBehaviour
             ui_manager.UpdateText();
         }
     }
-    public void BuyInStore(GameObject purchaseID)
-    {
-        bool sucessPurchase;
-        int rewardEnergy = 0;
-        int rewardMoney = 0;
-        switch (purchaseID.name)
-        {
-            case "Item":
-                sucessPurchase = true;
-                rewardEnergy = 1;
-                rewardMoney = 10;
-                break;
-            default:
-                sucessPurchase = false;
-                break;
-        }
-        if (sucessPurchase)
-        {
-            money += rewardMoney;
-            energy += rewardEnergy;
-            ui_manager.UpdateText();
-            purchaseID.SetActive(false);
-            rewardEnergy = 0;
-            rewardMoney = 0;
-        }
-        else
-        {
-            GameObject.Find("Purchase Error").SetActive(true);
-        }
-    }
 
     public void LevelUp(int xpGained)
     {

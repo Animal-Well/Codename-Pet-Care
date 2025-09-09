@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: NewBuyable
   m_EditorClassIdentifier: 
   cost: 100
-  effect: 
+  reward: 1000
+  type: 0
