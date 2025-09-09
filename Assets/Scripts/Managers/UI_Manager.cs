@@ -26,10 +26,10 @@ public class UI_Manager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        gameManager = GameManager.Instance_GameManager;
     }
     void Start()
     {
+        gameManager = GameManager.Instance_GameManager;
         moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
         energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
     }

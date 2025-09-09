@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public int energy = 3, money = 0, maxEnergy = 3;
     public int level = 0;
     public float xpPoints = 0f, xpToLvlUp = 100f;
+    public float energyReloadCooldown = 2f;
     private void Awake()
     {
         if (Instance_GameManager == null)
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     {
         ui_manager = FindFirstObjectByType<UI_Manager>();
         player = FindFirstObjectByType<PlayerBehaviour>();
+        StartCoroutine(RechargeEnergy());
     }
     private void Update()
     {
@@ -75,5 +77,20 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(string newScene)
     {
         SceneManager.LoadScene(newScene);
+    }
+    public void SpendEnergy()
+    {
+        if(energy < 1)
+        {
+            Debug.Log("Sem Energia");
+        }
+    }
+    private IEnumerator RechargeEnergy()
+    {
+        if(energy < maxEnergy)
+            energy++;
+        yield return new WaitForSecondsRealtime(energyReloadCooldown);
+        StartCoroutine(RechargeEnergy());
+        yield break;
     }
 }
