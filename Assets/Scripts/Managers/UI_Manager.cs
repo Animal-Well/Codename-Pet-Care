@@ -30,15 +30,19 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance_GameManager;
-        moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
-        energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
+        //moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
+        //energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
     {
         //UseJoystick();
-        UpdateText();
-        UpdateLevel();
+        if (GameManager.CurrentMinigame == GameManager.MinigameType.None)
+        {
+            //UpdateText();
+            //UpdateLevel();
+        }
+        
     }
 
     public void UpdateText()

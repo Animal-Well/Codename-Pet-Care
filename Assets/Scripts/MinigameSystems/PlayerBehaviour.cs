@@ -1,50 +1,61 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    public GameManager manager;
+    private static GameManager manager = GameManager.Instance_GameManager;
 
+    //[Header("Cleaing Minigame")]
+
+    [Header("Bathing Minigame")]
+    [SerializeField] private LayerMask bathingLayers;
+    private Ray ray;
+    private RaycastHit hit;
+
+
+    [Header("Walking Minigame")]
     public float speed = 15f;
-
-    public CharacterController controller;
+    private CharacterController _controller;
     void Start()
     {
-        controller = GetComponent<CharacterController>();
+        if (_controller == null && GameManager.CurrentMinigame == GameManager.MinigameType.Walking)
+        _controller = GetComponent<CharacterController>();
     }
     void Update()
     {
-        //HandleMovement();
+        switch(GameManager.CurrentMinigame)
+        {
+            case GameManager.MinigameType.Bathing:
+                OnBathing();   //Call Bathing minigame functions
+                break;
+            case GameManager.MinigameType.Cleaning:
+                //Call Cleaning minigame functions
+                break;
+            case GameManager.MinigameType.Walking:
+                //Call Walking minigame functions
+                break;
+            default:
+                //Do nothing
+                break;
+        }
+    }
+    private void OnBathing()
+    {
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        
+        if (Physics.Raycast(ray, out hit, 1000f, bathingLayers))
+        {
+            Debug.DrawRay(ray.origin, hit.point);
+            Animator targetAnimator = hit.collider.GetComponent<Animator>();
+            Debug.Log("Clipped");
+            ClipingNails(targetAnimator);
+        }
+    }
+    private void ClipingNails(Animator animator)
+    {
+        animator.SetBool("ClipNail", true);
     }
 
-    public void MoveLeft()
-    {
-        Vector3 leftPos = new Vector3(14f, transform.position.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, leftPos, speed * Time.deltaTime);
-    }
-    public void MoveRight()
-    {
-        Vector3 rightPos = new Vector3(22f, transform.position.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, rightPos, speed * Time.deltaTime);
-    }
-    /*
-    void HandleMovement()
-    {
-        controller.Move(Vector3.forward * speed * Time.deltaTime);
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-            Vector2 move = new Vector2(Mathf.Clamp(touchPos.x, 9f, 22f), 0f);
-            controller.Move(move * speed * Time.deltaTime);
-            
-            Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-            Vector3 move = new Vector3(touchPos.x, 0f, 1f);
-            _controller.Move(move * speed * Time.deltaTime);
-            Debug.Log(touch.position + "     TouchPos:" + touchPos + "     Move:" + move);
-        
-        }
-        
-    }*/
 }
