@@ -47,15 +47,16 @@ public class PlayerBehaviour : MonoBehaviour
         
         if (Physics.Raycast(ray, out hit, 1000f, bathingLayers))
         {
-            Debug.DrawRay(ray.origin, hit.point);
-            Animator targetAnimator = hit.collider.GetComponent<Animator>();
-            Debug.Log("Clipped");
-            ClipingNails(targetAnimator);
+            switch(GameManager.CurrentStage)
+            {
+                default:
+                    break;
+            }
         }
     }
     private void ClipingNails(Animator animator)
     {
-        animator.SetBool("ClipNail", true);
+        animator.SetTrigger("ClipNail");
     }
 
 }

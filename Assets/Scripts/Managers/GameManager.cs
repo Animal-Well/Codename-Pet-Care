@@ -24,6 +24,13 @@ public class GameManager : MonoBehaviour
             CurrentMinigame = newMinigame;
         }
     }
+    public enum MinigameStage
+    {
+        Beggining,
+        Middle,
+        End
+    }
+    public static MinigameStage CurrentStage = MinigameStage.Beggining;
 
     public UI_Manager ui_manager;
     public PlayerBehaviour player;
