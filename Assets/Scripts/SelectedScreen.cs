@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SelectedScreen : MonoBehaviour
 {
-    public static UI_Manager manager = UI_Manager.Instance_UI_Manager;
+    public static UI_Manager manager = UI_Manager.Instance;
     [Serializable]
     public class SelectableScreens
     {

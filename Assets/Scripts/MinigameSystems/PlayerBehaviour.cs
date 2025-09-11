@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    private static GameManager manager = GameManager.Instance_GameManager;
+    private static GameManager manager = GameManager.Instance;
 
     //[Header("Cleaing Minigame")]
 
     [Header("Bathing Minigame")]
     [SerializeField] private LayerMask bathingLayers;
+    [SerializeField] private GameObject[] bathingObjects;
+    [SerializeField] private GameObject currentBathObject;
     private Ray ray;
     private RaycastHit hit;
 
@@ -47,16 +49,38 @@ public class PlayerBehaviour : MonoBehaviour
         
         if (Physics.Raycast(ray, out hit, 1000f, bathingLayers))
         {
-            switch(GameManager.CurrentStage)
+            switch(StageManager.CurrentStage)
             {
+                case StageManager.MinigameStages.Start:
+                    if(Input.GetButton("Fire1"))
+                    {
+                        UseSoap(hit.point);
+                        if(hit.collider.CompareTag("Dirt"))
+                        {
+                            Destroy(hit.collider.gameObject);
+                        }
+                    }
+                    break;
+                case StageManager.MinigameStages.Middle:
+                    if(Input.GetButtonDown("Fire1"))
+                    {
+                        if(hit.collider.CompareTag("Nails"))
+                            UseNailClip(hit.collider.gameObject);
+                    }
+                    break;
                 default:
                     break;
             }
         }
     }
-    private void ClipingNails(Animator animator)
+    private void UseSoap(Vector3 soapPos)
     {
-        animator.SetTrigger("ClipNail");
+        currentBathObject = currentBathObject == null ? Instantiate(bathingObjects[0]) : currentBathObject;
+        currentBathObject.transform.position = soapPos;
+    }
+    private void UseNailClip(GameObject target)
+    {
+        Destroy(target);
     }
 
 }

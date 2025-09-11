@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance_GameManager { get; private set; }
+    public static GameManager Instance { get; private set; }
     public enum MinigameType
     {
         None,
@@ -24,13 +24,6 @@ public class GameManager : MonoBehaviour
             CurrentMinigame = newMinigame;
         }
     }
-    public enum MinigameStage
-    {
-        Beggining,
-        Middle,
-        End
-    }
-    public static MinigameStage CurrentStage = MinigameStage.Beggining;
 
     public UI_Manager ui_manager;
     public PlayerBehaviour player;
@@ -41,9 +34,9 @@ public class GameManager : MonoBehaviour
     public float energyReloadCooldown = 2f;
     private void Awake()
     {
-        if (Instance_GameManager == null)
+        if (Instance == null)
         {
-            Instance_GameManager = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -53,7 +46,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        ui_manager = UI_Manager.Instance_UI_Manager;
+        ui_manager = UI_Manager.Instance;
         player = FindFirstObjectByType<PlayerBehaviour>();
         StartCoroutine(RechargeEnergy());
     }
@@ -102,6 +95,24 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(string newScene)
     {
         SceneManager.LoadScene(newScene);
+    }
+    public void ChangeScene(MinigameType minigame)
+    {
+        switch(minigame)
+        {
+            case MinigameType.None:
+                ChangeScene("Menu");
+                break;
+            case MinigameType.Bathing:
+                ChangeScene("Minigame Banho");
+                break;
+            case MinigameType.Cleaning:
+                ChangeScene("Minigame Arrumar");
+                break;
+            case MinigameType.Walking:
+                ChangeScene("Minigame Caminhar");
+                break;
+        }
     }
     public void SpendEnergy()
     {

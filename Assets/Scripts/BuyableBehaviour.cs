@@ -5,11 +5,11 @@ public class BuyableBehaviour : MonoBehaviour
 {
     public BuyableData data;
 
-    private static GameManager gameManager = GameManager.Instance_GameManager;
+    private static GameManager gameManager = GameManager.Instance;
     private void Start()
     {
         if (gameManager == null)
-            gameManager = GameManager.Instance_GameManager;
+            gameManager = GameManager.Instance;
     }
     public void BuyItem()
     {

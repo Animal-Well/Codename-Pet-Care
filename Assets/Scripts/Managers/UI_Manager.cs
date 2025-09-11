@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class UI_Manager : MonoBehaviour
 {
-    public static UI_Manager Instance_UI_Manager { get; private set; }
+    public static UI_Manager Instance { get; private set; }
 
-    public static GameManager gameManager = GameManager.Instance_GameManager;
+    public static GameManager gameManager = GameManager.Instance;
 
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI energyText;
@@ -17,9 +17,9 @@ public class UI_Manager : MonoBehaviour
     {
                 //  Não tenho certeza se vai ser necessario manter isso como um "Manager"
         
-        if (Instance_UI_Manager == null)
+        if (Instance == null)
         {
-            Instance_UI_Manager = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -29,7 +29,7 @@ public class UI_Manager : MonoBehaviour
     }
     void Start()
     {
-        gameManager = GameManager.Instance_GameManager;
+        gameManager = GameManager.Instance;
         //moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
         //energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
     }
