@@ -57,7 +57,9 @@ public class PlayerBehaviour : MonoBehaviour
                         UseSoap(hit.point);
                         if(hit.collider.CompareTag("Dirt"))
                         {
+                            StageManager.CurrentStage = StageManager.MinigameStages.Middle;
                             Destroy(hit.collider.gameObject);
+                            Destroy(currentBathObject);
                         }
                     }
                     break;
@@ -65,10 +67,14 @@ public class PlayerBehaviour : MonoBehaviour
                     if(Input.GetButtonDown("Fire1"))
                     {
                         if(hit.collider.CompareTag("Nails"))
+                        {
                             UseNailClip(hit.collider.gameObject);
+                            StageManager.CurrentStage = StageManager.MinigameStages.End;
+                        }
                     }
                     break;
                 default:
+                    manager.ChangeScene(GameManager.MinigameType.None);
                     break;
             }
         }

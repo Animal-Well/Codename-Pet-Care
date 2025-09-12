@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
         Bathing,
         Walking
     }
-    public static MinigameType CurrentMinigame = MinigameType.Cleaning;
+    public static MinigameType CurrentMinigame = MinigameType.Bathing;
 
     public static void ChangeMinigame(string minigameName)
     {
