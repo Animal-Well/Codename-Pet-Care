@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &2501078579575818487
+--- !u!1001 &8335965704310516728
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,9 +8,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4437223130971613022, guid: 1dd3e9642d3f06f46a23ddb74449144b, type: 3}
+      propertyPath: m_Name
+      value: Shower Pet
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975922498571823091, guid: 1dd3e9642d3f06f46a23ddb74449144b, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.9254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975922498571823091, guid: 1dd3e9642d3f06f46a23ddb74449144b, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.87371576
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975922498571823091, guid: 1dd3e9642d3f06f46a23ddb74449144b, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.5882353
+      objectReference: {fileID: 0}
     - target: {fileID: 5356907701201171613, guid: 1dd3e9642d3f06f46a23ddb74449144b, type: 3}
       propertyPath: m_Name
-      value: Soap
+      value: Shower
       objectReference: {fileID: 0}
     - target: {fileID: 6103266028455523927, guid: 1dd3e9642d3f06f46a23ddb74449144b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52,6 +68,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6891711918779054565, guid: 1dd3e9642d3f06f46a23ddb74449144b, type: 3}
+      propertyPath: m_Name
+      value: Shower Particle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7180434892832555776, guid: 1dd3e9642d3f06f46a23ddb74449144b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 232467525331bef48824730841d9a19b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

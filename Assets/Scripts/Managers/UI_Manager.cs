@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static StageManager;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class UI_Manager : MonoBehaviour
     void Update()
     {
         //UseJoystick();
-        if (GameManager.CurrentMinigame == GameManager.MinigameType.None)
+        if (CurrentMinigame == MinigameType.None)
         {
             //UpdateText();
             //UpdateLevel();

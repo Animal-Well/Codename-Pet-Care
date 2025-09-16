@@ -48,6 +48,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   bathingObjects:
-  - {fileID: 5356907701201171613, guid: 1dd3e9642d3f06f46a23ddb74449144b, type: 3}
+  - {fileID: 7557623584065256554, guid: a4110beb2f93f274a931aaedd0b29d4f, type: 3}
+  - {fileID: 3884620673419726690, guid: 5084761bf9787ec47b64ed2d204b1a9e, type: 3}
+  - {fileID: 4177303645313965925, guid: f164826b7b8d7ad41a4d6bc93eb6272a, type: 3}
   currentBathObject: {fileID: 0}
   speed: 15

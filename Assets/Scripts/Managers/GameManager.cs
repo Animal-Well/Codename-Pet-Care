@@ -3,27 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static StageManager;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public enum MinigameType
-    {
-        None,
-        Cleaning,
-        Bathing,
-        Walking
-    }
-    public static MinigameType CurrentMinigame = MinigameType.Bathing;
-
-    public static void ChangeMinigame(string minigameName)
-    {
-        MinigameType newMinigame = MinigameType.None;
-        if (Enum.TryParse(minigameName, out newMinigame))
-        {
-            CurrentMinigame = newMinigame;
-        }
-    }
+    
 
     public UI_Manager ui_manager;
     public PlayerBehaviour player;

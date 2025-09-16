@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    private static GameManager manager = GameManager.Instance;
+    private static readonly GameManager Manager = GameManager.Instance;
 
     //[Header("Cleaing Minigame")]
 
@@ -13,6 +11,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private LayerMask bathingLayers;
     [SerializeField] private GameObject[] bathingObjects;
     [SerializeField] private GameObject currentBathObject;
+    private bool _canStartCoroutines = true;
     private Ray ray;
     private RaycastHit hit;
 
@@ -22,59 +21,60 @@ public class PlayerBehaviour : MonoBehaviour
     private CharacterController _controller;
     void Start()
     {
-        if (_controller == null && GameManager.CurrentMinigame == GameManager.MinigameType.Walking)
+        if (_controller == null && StageManager.CurrentMinigame == StageManager.MinigameType.Walking)
         _controller = GetComponent<CharacterController>();
     }
     void Update()
     {
-        switch(GameManager.CurrentMinigame)
+        switch(StageManager.CurrentMinigame)
         {
-            case GameManager.MinigameType.Bathing:
+            case StageManager.MinigameType.Bathing:
                 OnBathing();   //Call Bathing minigame functions
                 break;
-            case GameManager.MinigameType.Cleaning:
+            case StageManager.MinigameType.Cleaning:
                 //Call Cleaning minigame functions
                 break;
-            case GameManager.MinigameType.Walking:
+            case StageManager.MinigameType.Walking:
                 //Call Walking minigame functions
                 break;
             default:
                 //Do nothing
                 break;
         }
+        if (_canStartCoroutines)
+        {
+            StartCoroutine(ResetBathingObject());
+        }
     }
     private void OnBathing()
     {
+
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         
-        if (Physics.Raycast(ray, out hit, 1000f, bathingLayers))
+        if (Physics.Raycast(ray, out hit))
         {
             switch(StageManager.CurrentStage)
             {
                 case StageManager.MinigameStages.Start:
-                    if(Input.GetButton("Fire1"))
+                    UseSoap(hit.point);
+                    if (hit.collider.CompareTag("Dirt"))
                     {
-                        UseSoap(hit.point);
-                        if(hit.collider.CompareTag("Dirt"))
-                        {
-                            StageManager.CurrentStage = StageManager.MinigameStages.Middle;
-                            Destroy(hit.collider.gameObject);
-                            Destroy(currentBathObject);
-                        }
+                        Destroy(hit.collider.gameObject);
                     }
                     break;
                 case StageManager.MinigameStages.Middle:
-                    if(Input.GetButtonDown("Fire1"))
+                    UseNailClip(hit.point);
+                    if (hit.collider.CompareTag("Nails"))
                     {
-                        if(hit.collider.CompareTag("Nails"))
-                        {
-                            UseNailClip(hit.collider.gameObject);
-                            StageManager.CurrentStage = StageManager.MinigameStages.End;
-                        }
+                        Destroy(hit.collider.gameObject);
                     }
                     break;
+                case StageManager.MinigameStages.End:
+                    UseShower(hit.point);
+                    
+                    break;
                 default:
-                    manager.ChangeScene(GameManager.MinigameType.None);
+                    Manager.ChangeScene(StageManager.MinigameType.None);
                     break;
             }
         }
@@ -82,11 +82,36 @@ public class PlayerBehaviour : MonoBehaviour
     private void UseSoap(Vector3 soapPos)
     {
         currentBathObject = currentBathObject == null ? Instantiate(bathingObjects[0]) : currentBathObject;
-        currentBathObject.transform.position = soapPos;
+        TouchToMove(soapPos, currentBathObject.transform);
     }
-    private void UseNailClip(GameObject target)
+    private void UseNailClip(Vector3 clipPos)
     {
-        Destroy(target);
-    }
+        currentBathObject = currentBathObject == null ? Instantiate(bathingObjects[1]) : currentBathObject;
+        TouchToMove(clipPos, currentBathObject.transform);
 
+        Vector3 previousPos = transform.position;
+        transform.position = currentBathObject.transform.position;
+        transform.position = previousPos;
+    }
+    private void UseShower(Vector3 showerPos)
+    {
+        currentBathObject = currentBathObject == null ? Instantiate(bathingObjects[2]) : currentBathObject;
+        TouchToMove(showerPos, currentBathObject.transform);
+    }
+    private void TouchToMove(Vector3 moveTo, Transform movingObject)
+    {
+        if(Input.GetButton("Fire1"))
+        {
+            movingObject.position = moveTo;
+        }
+    }
+    private IEnumerator ResetBathingObject()
+    {
+        _canStartCoroutines = false;
+        Destroy(currentBathObject);
+        StageManager.MinigameStages stageCheck = StageManager.CurrentStage;
+        yield return null;
+        yield return new WaitUntil(() => stageCheck != StageManager.CurrentStage);
+        StartCoroutine(ResetBathingObject());
+    }
 }
