@@ -11,6 +11,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] private LayerMask bathingLayers;
     [SerializeField] private GameObject[] bathingObjects;
     [SerializeField] private GameObject currentBathObject;
+    [SerializeField] private TagHandle[] bathTargetTags;
     private bool _canStartCoroutines = true;
     private Ray ray;
     private RaycastHit hit;
@@ -57,21 +58,22 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 case StageManager.MinigameStages.Start:
                     UseSoap(hit.point);
-                    if (hit.collider.CompareTag("Dirt"))
+                    if (hit.collider.CompareTag(bathTargetTags[0]))
                     {
                         Destroy(hit.collider.gameObject);
                     }
                     break;
                 case StageManager.MinigameStages.Middle:
                     UseNailClip(hit.point);
-                    if (hit.collider.CompareTag("Nails"))
+                    if (hit.collider.CompareTag(bathTargetTags[1]))
                     {
                         Destroy(hit.collider.gameObject);
                     }
                     break;
                 case StageManager.MinigameStages.End:
                     UseShower(hit.point);
-                    
+                    if (hit.collider.CompareTag(bathTargetTags[2]))
+                        Destroy(hit.collider.gameObject);
                     break;
                 default:
                     Manager.ChangeScene(StageManager.MinigameType.None);
@@ -88,10 +90,6 @@ public class PlayerBehaviour : MonoBehaviour
     {
         currentBathObject = currentBathObject == null ? Instantiate(bathingObjects[1]) : currentBathObject;
         TouchToMove(clipPos, currentBathObject.transform);
-
-        Vector3 previousPos = transform.position;
-        transform.position = currentBathObject.transform.position;
-        transform.position = previousPos;
     }
     private void UseShower(Vector3 showerPos)
     {
