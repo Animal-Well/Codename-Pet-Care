@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static StageManager;
 
 public class UI_Manager : MonoBehaviour
@@ -13,11 +14,12 @@ public class UI_Manager : MonoBehaviour
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI energyText;
     public TextMeshProUGUI playerLevelText;
+    public Slider progressBar;
 
     private void Awake()
     {
-                //  Não tenho certeza se vai ser necessario manter isso como um "Manager"
-        
+        //  Nï¿½o tenho certeza se vai ser necessario manter isso como um "Manager"
+
         if (Instance == null)
         {
             Instance = this;
@@ -31,8 +33,17 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
-        //moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
-        //energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
+        if (CurrentMinigame == MinigameType.None)
+        {
+            UpdateText();
+            UpdateLevel();
+            moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
+            energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
+        }
+        else if (CurrentMinigame == MinigameType.Bathing)
+        {
+            progressBar = FindFirstObjectByType<Slider>().GetComponent<Slider>();
+        }
     }
 
     void Update()
@@ -40,10 +51,13 @@ public class UI_Manager : MonoBehaviour
         //UseJoystick();
         if (CurrentMinigame == MinigameType.None)
         {
-            //UpdateText();
-            //UpdateLevel();
+            UpdateText();
+            UpdateLevel();
         }
-        
+        else if (CurrentMinigame == MinigameType.Bathing)
+        {
+            progressBar.value = StageManager.Instance.GetProgress();
+        }
     }
 
     public void UpdateText()

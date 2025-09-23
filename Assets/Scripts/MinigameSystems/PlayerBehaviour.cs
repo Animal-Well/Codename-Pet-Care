@@ -29,7 +29,7 @@ public class PlayerBehaviour : MonoBehaviour
         switch(StageManager.CurrentMinigame)
         {
             case StageManager.MinigameType.Bathing:
-                OnBathing();   //Call Bathing minigame functions
+                OnBathing();
                 break;
             case StageManager.MinigameType.Cleaning:
                 //Call Cleaning minigame functions
@@ -38,7 +38,7 @@ public class PlayerBehaviour : MonoBehaviour
                 //Call Walking minigame functions
                 break;
             default:
-                //Do nothing
+                Manager.ChangeScene(StageManager.MinigameType.None);
                 break;
         }
         if (_canStartCoroutines)
@@ -60,6 +60,7 @@ public class PlayerBehaviour : MonoBehaviour
                     if (hit.collider.CompareTag("Dirt"))
                     {
                         Destroy(hit.collider.gameObject);
+                        StageManager.Instance._progress++;
                     }
                     break;
                 case StageManager.MinigameStages.Middle:
@@ -67,11 +68,16 @@ public class PlayerBehaviour : MonoBehaviour
                     if (hit.collider.CompareTag("Nails"))
                     {
                         Destroy(hit.collider.gameObject);
+                        StageManager.Instance._progress++;
                     }
                     break;
                 case StageManager.MinigameStages.End:
                     UseShower(hit.point);
-                    
+                    if (hit.collider.CompareTag("Shower"))
+                    {
+                        Destroy(hit.collider.gameObject);
+                        StageManager.Instance._progress++;
+                    }
                     break;
                 default:
                     Manager.ChangeScene(StageManager.MinigameType.None);

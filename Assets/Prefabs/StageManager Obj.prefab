@@ -44,7 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f1ebf9ea3c91c4e95f2a8f9b3d6aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectives:
+  bathObjectives:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 4974287389255625827, guid: 007cfa1baeaf54a46af5be510a5f8346, type: 3}
+  cleanObjectives:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  walkObjectives:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
