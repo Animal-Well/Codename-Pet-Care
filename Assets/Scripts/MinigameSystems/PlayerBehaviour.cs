@@ -1,9 +1,10 @@
 using System.Collections;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    private static readonly GameManager Manager = GameManager.Instance;
+    private static GameManager Manager = GameManager.Instance;
 
     //[Header("Cleaing Minigame")]
 
@@ -22,17 +23,19 @@ public class PlayerBehaviour : MonoBehaviour
     void Start()
     {
         if (_controller == null && StageManager.CurrentMinigame == StageManager.MinigameType.Walking)
-        _controller = GetComponent<CharacterController>();
+            _controller = GetComponent<CharacterController>();
+        if (Manager == null)
+            Manager = GameManager.Instance;
     }
     void Update()
     {
-        switch(StageManager.CurrentMinigame)
+        switch (StageManager.CurrentMinigame)
         {
             case StageManager.MinigameType.Bathing:
                 OnBathing();
                 break;
             case StageManager.MinigameType.Cleaning:
-                //Call Cleaning minigame functions
+                OnCleaning();
                 break;
             case StageManager.MinigameType.Walking:
                 //Call Walking minigame functions
@@ -43,24 +46,22 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (_canStartCoroutines)
         {
+            _canStartCoroutines = false;
             StartCoroutine(ResetBathingObject());
         }
     }
     private void OnBathing()
     {
-
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        
         if (Physics.Raycast(ray, out hit))
         {
-            switch(StageManager.CurrentStage)
+            switch (StageManager.CurrentStage)
             {
                 case StageManager.MinigameStages.Start:
                     UseSoap(hit.point);
                     if (hit.collider.CompareTag("Dirt"))
                     {
                         Destroy(hit.collider.gameObject);
-                        StageManager.Instance._progress++;
                     }
                     break;
                 case StageManager.MinigameStages.Middle:
@@ -68,7 +69,6 @@ public class PlayerBehaviour : MonoBehaviour
                     if (hit.collider.CompareTag("Nails"))
                     {
                         Destroy(hit.collider.gameObject);
-                        StageManager.Instance._progress++;
                     }
                     break;
                 case StageManager.MinigameStages.End:
@@ -76,7 +76,6 @@ public class PlayerBehaviour : MonoBehaviour
                     if (hit.collider.CompareTag("Shower"))
                     {
                         Destroy(hit.collider.gameObject);
-                        StageManager.Instance._progress++;
                     }
                     break;
                 default:
@@ -94,10 +93,6 @@ public class PlayerBehaviour : MonoBehaviour
     {
         currentBathObject = currentBathObject == null ? Instantiate(bathingObjects[1]) : currentBathObject;
         TouchToMove(clipPos, currentBathObject.transform);
-
-        Vector3 previousPos = transform.position;
-        transform.position = currentBathObject.transform.position;
-        transform.position = previousPos;
     }
     private void UseShower(Vector3 showerPos)
     {
@@ -106,18 +101,41 @@ public class PlayerBehaviour : MonoBehaviour
     }
     private void TouchToMove(Vector3 moveTo, Transform movingObject)
     {
-        if(Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
             movingObject.position = moveTo;
         }
     }
     private IEnumerator ResetBathingObject()
     {
-        _canStartCoroutines = false;
         Destroy(currentBathObject);
         StageManager.MinigameStages stageCheck = StageManager.CurrentStage;
         yield return null;
         yield return new WaitUntil(() => stageCheck != StageManager.CurrentStage);
         StartCoroutine(ResetBathingObject());
+    }
+    private void OnCleaning()
+    {
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit))
+        {
+            GameObject target = hit.collider.gameObject;
+            
+            switch (StageManager.CurrentStage)
+            {
+                case StageManager.MinigameStages.Start:
+                    if (target.CompareTag("ObjectiveCleaning"))
+                    {
+                        Destroy(hit.collider.gameObject);
+                        StageManager.Instance.NextStage();
+                    }
+                    break;
+                case StageManager.MinigameStages.Middle:
+                    break;
+                case StageManager.MinigameStages.End:
+                    Manager.ChangeScene(StageManager.MinigameType.None);
+                    break;
+            }
+        }
     }
 }

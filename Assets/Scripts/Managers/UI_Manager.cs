@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static StageManager;
 
 public class UI_Manager : MonoBehaviour
 {
@@ -33,40 +32,34 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
-        if (CurrentMinigame == MinigameType.None)
+        if (StageManager.CurrentMinigame == StageManager.MinigameType.None)
         {
             UpdateText();
             UpdateLevel();
             moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
             energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
         }
-        else if (CurrentMinigame == MinigameType.Bathing)
-        {
-            progressBar = FindFirstObjectByType<Slider>().GetComponent<Slider>();
-        }
     }
 
     void Update()
     {
         //UseJoystick();
-        if (CurrentMinigame == MinigameType.None)
-        {
-            UpdateText();
-            UpdateLevel();
-        }
-        else if (CurrentMinigame == MinigameType.Bathing)
-        {
-            progressBar.value = StageManager.Instance.GetProgress();
-        }
+        progressBar.value = StageManager.Instance.GetProgress();
     }
 
     public void UpdateText()
     {
-        moneyText.text = gameManager.money.ToString();
-        energyText.text = $"{gameManager.energy}/{gameManager.maxEnergy}";
+        if (StageManager.CurrentMinigame == StageManager.MinigameType.None)
+        {
+            moneyText.text = gameManager.money.ToString();
+            energyText.text = $"{gameManager.energy}/{gameManager.maxEnergy}";
+        }
     }
     public void UpdateLevel()
     {
-        playerLevelText.text = gameManager.level.ToString();
+        if (StageManager.CurrentMinigame == StageManager.MinigameType.None)
+        {
+            playerLevelText.text = gameManager.level.ToString();
+        }
     }
 }

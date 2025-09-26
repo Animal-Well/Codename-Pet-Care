@@ -101,7 +101,12 @@ public class GameManager : MonoBehaviour
     }
     public void SpendEnergy()
     {
-        if(energy < 1)
+        if (energy != 0)
+        {
+            energy--;
+            ui_manager.UpdateText();
+        }
+        else
         {
             Debug.Log("Sem Energia");
         }
