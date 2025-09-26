@@ -131,6 +131,11 @@ public class PlayerBehaviour : MonoBehaviour
                     }
                     break;
                 case StageManager.MinigameStages.Middle:
+                    if (target.CompareTag("ObjectiveCleaning"))
+                    {
+                        Destroy(hit.collider.gameObject);
+                        StageManager.Instance.NextStage();
+                    }
                     break;
                 case StageManager.MinigameStages.End:
                     Manager.ChangeScene(StageManager.MinigameType.None);
