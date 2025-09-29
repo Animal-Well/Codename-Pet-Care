@@ -505,17 +505,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7d4a3c3d46b0ed4d97cb90b8b87753c, type: 3}
---- !u!114 &122136766 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 445726807902914088, guid: e7d4a3c3d46b0ed4d97cb90b8b87753c, type: 3}
-  m_PrefabInstance: {fileID: 122136765}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16e81f4f9a8ca01429d4d86ae8f3ca28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &142079857
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,6 +730,7 @@ GameObject:
   - component: {fileID: 190159046}
   - component: {fileID: 190159045}
   - component: {fileID: 190159044}
+  - component: {fileID: 190159047}
   m_Layer: 5
   m_Name: Play Button
   m_TagString: Untagged
@@ -812,10 +802,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 122136766}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ChangeScene
-        m_Mode: 5
+      - m_Target: {fileID: 190159047}
+        m_TargetAssemblyTypeName: PlayButtonBehaviour, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -862,6 +852,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190159042}
   m_CullTransparentMesh: 1
+--- !u!114 &190159047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190159042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d15fbacb5b37314b925c076443a6148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &231137425
 GameObject:
   m_ObjectHideFlags: 0

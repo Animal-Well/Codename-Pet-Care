@@ -758,6 +758,7 @@ GameObject:
   m_Component:
   - component: {fileID: 860777292}
   - component: {fileID: 860777293}
+  - component: {fileID: 860777294}
   m_Layer: 5
   m_Name: Progress Bar
   m_TagString: Untagged
@@ -838,6 +839,21 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &860777294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860777291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e31e2041758bb604ebf6120446473c12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxProgress: 3
+  _progress: 0
+  _progressSlider: {fileID: 0}
 --- !u!1 &953980961
 GameObject:
   m_ObjectHideFlags: 0

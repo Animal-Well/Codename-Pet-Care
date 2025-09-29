@@ -13,7 +13,7 @@ public class UI_Manager : MonoBehaviour
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI energyText;
     public TextMeshProUGUI playerLevelText;
-    public Slider progressBar;
+    private Button _playButton;
 
     private void Awake()
     {
@@ -44,7 +44,6 @@ public class UI_Manager : MonoBehaviour
     void Update()
     {
         //UseJoystick();
-        progressBar.value = StageManager.Instance.GetProgress();
     }
 
     public void UpdateText()

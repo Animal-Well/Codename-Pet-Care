@@ -62,6 +62,7 @@ public class PlayerBehaviour : MonoBehaviour
                     if (hit.collider.CompareTag("Dirt"))
                     {
                         Destroy(hit.collider.gameObject);
+                        StageManager.Instance.GrowMinigameProgress();
                     }
                     break;
                 case StageManager.MinigameStages.Middle:
@@ -69,6 +70,7 @@ public class PlayerBehaviour : MonoBehaviour
                     if (hit.collider.CompareTag("Nails"))
                     {
                         Destroy(hit.collider.gameObject);
+                        StageManager.Instance.GrowMinigameProgress();
                     }
                     break;
                 case StageManager.MinigameStages.End:
@@ -76,6 +78,7 @@ public class PlayerBehaviour : MonoBehaviour
                     if (hit.collider.CompareTag("Shower"))
                     {
                         Destroy(hit.collider.gameObject);
+                        StageManager.Instance.GrowMinigameProgress();
                     }
                     break;
                 default:
@@ -127,14 +130,12 @@ public class PlayerBehaviour : MonoBehaviour
                     if (target.CompareTag("ObjectiveCleaning"))
                     {
                         Destroy(hit.collider.gameObject);
-                        StageManager.Instance.NextStage();
                     }
                     break;
                 case StageManager.MinigameStages.Middle:
                     if (target.CompareTag("ObjectiveCleaning"))
                     {
                         Destroy(hit.collider.gameObject);
-                        StageManager.Instance.NextStage();
                     }
                     break;
                 case StageManager.MinigameStages.End:

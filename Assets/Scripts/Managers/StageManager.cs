@@ -11,6 +11,9 @@ public class StageManager : MonoBehaviour
     [SerializeField] private GameObject[] cleanObjectives = new GameObject[3];
     [SerializeField] private GameObject[] walkObjectives = new GameObject[3];
     private static GameManager gameManager = GameManager.Instance;
+    public bool isCompleted = false;
+
+    private ProgressBehaviour _progressBarBehaviour;
 
     public enum MinigameStages
     {
@@ -26,9 +29,7 @@ public class StageManager : MonoBehaviour
         Bathing,
         Walking
     }
-    public static MinigameType CurrentMinigame = MinigameType.Cleaning;
-    [SerializeField] private float _maxProgress = 3f;
-    [SerializeField] private float _progress = 0f;
+    public static MinigameType CurrentMinigame = MinigameType.Bathing;
 
     public static void ChangeMinigame(string minigameName)
     {
@@ -41,7 +42,7 @@ public class StageManager : MonoBehaviour
     {
         CurrentMinigame = newMinigame;
         CurrentStage = MinigameStages.Start;
-        _progress = 0;
+        _progressBarBehaviour.ResetProgress();
     }
     public static void ChangeState(MinigameStages changeTo)
     {
@@ -52,24 +53,8 @@ public class StageManager : MonoBehaviour
         if(Enum.TryParse(changeTo, out MinigameStages newState))
             CurrentStage = newState;
     }
-    public void NextStage()
-    {
-        if (CurrentStage == MinigameStages.Start)
-        {
-            CurrentStage = MinigameStages.Middle;
-            _progress++;
-        }
-        else
-        {
-            CurrentStage = MinigameStages.End;
-            _progress++;
-        }
-    }
-    public float GetProgress()
-    {
-        return _progress / _maxProgress;
-    }
-    private void Start()
+    
+    private void Awake()
     {
         if (Instance != null)
         {
@@ -80,15 +65,77 @@ public class StageManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(Instance);
         }
+    }
+    private void Start()
+    {
         gameManager = GameManager.Instance;
+        _progressBarBehaviour = FindFirstObjectByType<ProgressBehaviour>();
         StartCoroutine(MinigameCoroutine());
     }
+    private void LateUpdate()
+    {
+        
+    }
     private IEnumerator MinigameCoroutine()
+    {
+        CheckMinigame();
+        MinigameStages currentState = CurrentStage;
+        switch (CurrentStage)
+        {
+            case MinigameStages.Start:
+                if (CurrentObjectives[0] == null)
+                {
+                    _progressBarBehaviour.AdvanceProgress(1f);
+                    CurrentStage = MinigameStages.Middle;
+                }
+                break;
+            case MinigameStages.Middle:
+                if (CurrentObjectives[1] == null)
+                {
+                    _progressBarBehaviour.AdvanceProgress(1f);
+                    CurrentStage = MinigameStages.End;
+                }
+                break;
+            case MinigameStages.End:
+                if (CurrentMinigame == MinigameType.Bathing)
+                {
+                    if (CurrentObjectives[2] == null)
+                    {
+                        _progressBarBehaviour.AdvanceProgress(1f);
+                    }
+
+                    if (CurrentObjectives[2] != null && !CurrentObjectives[2].activeSelf)
+                        CurrentObjectives[2].SetActive(true);
+                }
+                break;
+        }
+
+        yield return new WaitForEndOfFrame();
+        if (isCompleted)
+        {
+            isCompleted = false;
+            yield return new WaitForEndOfFrame();
+            StartCoroutine(MinigameCoroutine());
+        }
+        else
+        {
+            StartCoroutine(MinigameCoroutine());
+        }
+            
+    }
+    private void CheckMinigame()
     {
         switch (CurrentMinigame)
         {
             case MinigameType.Bathing:
                 CurrentObjectives = bathObjectives;
+                _progressBarBehaviour.SetMaxProgress(CurrentObjectives.Length); 
+
+                if (_progressBarBehaviour.GetProgress() == 1)
+                {
+                    CurrentMinigame = MinigameType.Cleaning;
+                    gameManager.ChangeScene(CurrentMinigame);
+                }
                 break;
             case MinigameType.Cleaning:
                 CurrentObjectives = cleanObjectives;
@@ -102,35 +149,9 @@ public class StageManager : MonoBehaviour
                 CurrentMinigame = MinigameType.None;
                 break;
         }
-        
-        switch (CurrentStage)
-        {
-            case MinigameStages.Start:
-                if (CurrentObjectives[0] == null)
-                {
-                    NextStage();
-                }
-                break;
-            case MinigameStages.Middle:
-                if (CurrentObjectives[1] == null)
-                {
-                    NextStage();
-                }
-                break;
-            case MinigameStages.End:
-                if (CurrentMinigame == MinigameType.Bathing)
-                {
-                    if (CurrentObjectives[2] != null && !CurrentObjectives[2].activeSelf)
-                        CurrentObjectives[2].SetActive(true);
-                    else if (CurrentObjectives[2] == null)
-                    {
-                        _progress++;
-                    }
-                }
-            break;
-        }
-
-        yield return new WaitForSeconds(0.5f);
-        StartCoroutine(MinigameCoroutine());
+    }
+    public void GrowMinigameProgress()
+    {
+        isCompleted = true;
     }
 }
