@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static StageManager;
 
 public class GameManager : MonoBehaviour
 {
@@ -70,7 +69,23 @@ public class GameManager : MonoBehaviour
             _energy = _maxEnergy;
         }
     }
-
+    public void EarnMoney(float amount)
+    {
+        _money += amount;
+        _uiManager.UpdateText();
+    }
+    public void SpendMoney(float amount)
+    {
+        if (_money - amount >= 0)
+        {
+            _money -= amount;
+            _uiManager.UpdateText();
+        }
+        else
+        {
+            Debug.Log("Dinheiro Insuficiente");
+        }
+    }
     public void LevelUp(float xpGained)
     {
         float levelsGained = Mathf.FloorToInt(((_xpPoints + xpGained) / _xpToLvlUp) * 10f) / 10f;
