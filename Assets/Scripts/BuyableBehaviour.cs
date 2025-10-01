@@ -13,6 +13,6 @@ public class BuyableBehaviour : MonoBehaviour
     }
     public void BuyItem()
     {
-       gameManager.money -= data.cost;
+       gameManager._money -= data.cost;
     }
 }

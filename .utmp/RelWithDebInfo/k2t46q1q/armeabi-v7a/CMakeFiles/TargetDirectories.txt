@@ -1,0 +1,5 @@
+D:/Portifolio/Osten Challenge/Codename Pet Care - (CPC)/.utmp/RelWithDebInfo/k2t46q1q/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Portifolio/Osten Challenge/Codename Pet Care - (CPC)/.utmp/RelWithDebInfo/k2t46q1q/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+D:/Portifolio/Osten Challenge/Codename Pet Care - (CPC)/.utmp/RelWithDebInfo/k2t46q1q/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+D:/Portifolio/Osten Challenge/Codename Pet Care - (CPC)/.utmp/RelWithDebInfo/k2t46q1q/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+D:/Portifolio/Osten Challenge/Codename Pet Care - (CPC)/.utmp/RelWithDebInfo/k2t46q1q/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,52 +5,48 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance { get; private set; }
 
-    public GameObject[] CurrentObjectives { get; private set; }
+    
     [SerializeField] private GameObject[] bathObjectives = new GameObject[3];
     [SerializeField] private GameObject[] cleanObjectives = new GameObject[3];
     [SerializeField] private GameObject[] walkObjectives = new GameObject[3];
-    private static GameManager gameManager = GameManager.Instance;
 
-    public enum MinigameStages
-    {
-        Start,
-        Middle,
-        End
-    }
-    public static MinigameStages CurrentStage { get; private set; }
+    public ProgressBehaviour ProgressBarBehaviour { get;  private set; }
     public enum MinigameType
     {
-        None,
-        Cleaning,
-        Bathing,
-        Walking
+        None = 0,
+        Bathing = 1,
+        Cleaning = 2,
+        Walking = 3
     }
-    public static MinigameType CurrentMinigame = MinigameType.Bathing;
-    public float _progress;
-
-    public static void ChangeMinigame(string minigameName)
+    public MinigameType currentMinigame = MinigameType.None;
+    public GameObject[] GetMinigameObjectives()
     {
-        MinigameType newMinigame = MinigameType.None;
-        if (Enum.TryParse(minigameName, out newMinigame))
+        if (currentMinigame != MinigameType.None)
         {
-            CurrentMinigame = newMinigame;
+            if (currentMinigame == MinigameType.Bathing)
+                return bathObjectives;
+            else if (currentMinigame == MinigameType.Cleaning)
+                return cleanObjectives;
+            else if (currentMinigame == MinigameType.Walking)
+                return walkObjectives;
+            else
+                return new GameObject[3];
         }
+        else
+            return new GameObject[3];
     }
-    public static void ChangeState(MinigameStages changeTo)
+    private bool IsMinigameCompleted()
     {
-        CurrentStage = changeTo;
+        if (ProgressBarBehaviour.GetPercentProgress() == 1f)
+        {
+            return true;
+        }
+        return false;
     }
-    public static void ChangeState(string changeTo)
+    public void ChangeMinigame(MinigameType newMinigame)
     {
-        MinigameStages newState = CurrentStage;
+    }
 
-        if(Enum.TryParse(changeTo, out newState))
-            CurrentStage = newState;
-    }
-    public float GetProgress()
-    {
-        return _progress /= CurrentObjectives.Length;
-    }
     private void Awake()
     {
         if (Instance != null)
@@ -66,86 +61,99 @@ public class StageManager : MonoBehaviour
     }
     private void Start()
     {
-        gameManager = gameManager == null ? GameManager.Instance : gameManager;
+        ProgressBarBehaviour = FindFirstObjectByType<ProgressBehaviour>();
         StartCoroutine(MinigameCoroutine());
     }
     private IEnumerator MinigameCoroutine()
     {
-        if (CurrentMinigame == MinigameType.Bathing)
+
+        /*
+        switch (CurrentStage)
         {
-            CurrentObjectives = bathObjectives;
-            switch (CurrentStage)
-            {
-                case MinigameStages.Start:
-                    if (CurrentObjectives[0] == null)
-                    {
-                        CurrentStage = MinigameStages.Middle;
-                    }
-                    break;
-                case MinigameStages.Middle:
-                    if (CurrentObjectives[1] == null)
-                    {
-                        CurrentStage = MinigameStages.End;
-                    }
-                    break;
-                case MinigameStages.End:
-                    CurrentObjectives[2].SetActive(true);
-                    break;
-            }
-        }
-        else if (CurrentMinigame == MinigameType.Cleaning)
-        {
-            CurrentObjectives = cleanObjectives;
-            switch (CurrentStage)
-            {
-                case MinigameStages.Start:
-                    if (CurrentObjectives[0] == null)
-                    {
-                        CurrentStage = MinigameStages.Middle;
-                        _progress++;
-                    }
-                    break;
-                case MinigameStages.Middle:
-                    if (CurrentObjectives[1] == null)
-                    {
-                        CurrentStage = MinigameStages.End;
-                        _progress++;
-                    }
-                    break;
-                case MinigameStages.End:
+            case MinigameStages.Start:
+                if (CurrentObjectives[0] == null)
+                {
+                    CurrentStage = MinigameStages.Middle;
+                }
+                break;
+            case MinigameStages.Middle:
+                if (CurrentObjectives[1] == null)
+                {
+                    _progressBarBehaviour.AdvanceProgress(1f);
+                    CurrentStage = MinigameStages.End;
+                }
+                break;
+            case MinigameStages.End:
+                if (currentMinigame == MinigameType.Bathing)
+                {
                     if (CurrentObjectives[2] == null)
                     {
                         _progress++;
                         gameManager.ChangeScene(MinigameType.None);
                     }
-                    break;
-            }
+
+                    if (CurrentObjectives[2] != null && !CurrentObjectives[2].activeSelf)
+                        CurrentObjectives[2].SetActive(true);
+                }
+                break;
         }
-        else if (CurrentMinigame == MinigameType.Walking)
+        */
+
+        yield return new WaitForEndOfFrame();
+        if (IsMinigameCompleted())
         {
-            CurrentObjectives = walkObjectives;
-            switch (CurrentStage)
-            {
-                case MinigameStages.Start:
-                    CurrentStage = CurrentObjectives[0] == null ? MinigameStages.Middle : MinigameStages.Start;
-                    break;
-                case MinigameStages.Middle:
-                    CurrentStage = CurrentObjectives[1] == null ? MinigameStages.End : MinigameStages.Middle;
-                    break;
-                case MinigameStages.End:
-                    CurrentObjectives[2].SetActive(true);
-                    if (CurrentObjectives[2] == null)
-                        gameManager.ChangeScene(MinigameType.None);
-                    break;
-            }
+            StartCoroutine(MinigameCoroutine());
         }
         else
         {
-            CurrentObjectives = new GameObject[3];
-            CurrentStage = MinigameStages.Start;
-            CurrentMinigame = MinigameType.None;
+            //yield return new WaitUntil(() => )
         }
-        yield return new WaitForSeconds(1f);
-        StartCoroutine(MinigameCoroutine());
+
+    }
+    public void GrowMinigameProgress()
+    {
+        ProgressBarBehaviour.AdvanceProgress(1);
+    }
+    private void NextMinigame()
+    {
+        if (currentMinigame != MinigameType.None)
+        {
+            int newMinigame = (int)currentMinigame + 1;
+            ChangeToMinigameScene((MinigameType)newMinigame);
+        }
+        else
+        {
+            ChangeToMinigameScene(MinigameType.None);
+        }
+    }
+    public void ChangeToMinigameScene(MinigameType minigame)
+    {
+        var sceneChanger = GameManager.Instance;
+        if (minigame != currentMinigame)
+        {
+            currentMinigame = minigame;
+            ProgressBarBehaviour.ResetProgress();
+        }
+
+        switch (currentMinigame)
+        {
+            case MinigameType.None:
+                Debug.Log("No minigame was set. Returning to Menu.");
+                sceneChanger.ChangeScene("Menu");
+                break;
+            case MinigameType.Bathing:
+                sceneChanger.ChangeScene("Minigame Banho");
+                break;
+            case MinigameType.Cleaning:
+                sceneChanger.ChangeScene("Minigame Arrumar");
+                break;
+            case MinigameType.Walking:
+                sceneChanger.ChangeScene("Minigame Caminhar");
+                break;
+            default:
+                minigame = MinigameType.None;
+                ChangeMinigame(minigame);
+                break;
+        }
     }
 }

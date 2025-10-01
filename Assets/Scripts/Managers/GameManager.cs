@@ -10,13 +10,38 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     
 
-    public UI_Manager ui_manager;
-    public PlayerBehaviour player;
+    private UI_Manager _uiManager;
+    private PlayerBehaviour _player;
 
-    public int energy = 3, money = 0, maxEnergy = 3;
-    public int level = 0;
-    public float xpPoints = 0f, xpToLvlUp = 100f;
-    public float energyReloadCooldown = 2f;
+    private float _energy = 3, _money = 0, _maxEnergy = 3;
+    private int _level = 0;
+    private float _xpPoints = 0f, _xpToLvlUp = 100f;
+    private float _energyRenewCd = 2f;
+    public float GetMoney()
+    {
+        return _money;
+    }
+    public float GetRawEnergy()
+    {
+        return _energy;
+    }
+    public float GetMaxEnergy()
+    {
+        return _maxEnergy;
+    }
+    public float GetEnergyPercentage()
+    {
+        return _energy / _maxEnergy;
+    }
+    public float GetXpPercentage()
+    {
+        return _xpPoints / _xpToLvlUp;
+    }
+    public int GetCurrentLevel()
+    {
+        return _level;
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -31,49 +56,55 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        ui_manager = UI_Manager.Instance;
-        player = FindFirstObjectByType<PlayerBehaviour>();
+        _uiManager = UI_Manager.Instance;
+
+        if (_player == null)
+            _player = FindFirstObjectByType<PlayerBehaviour>();
+        
         StartCoroutine(RechargeEnergy());
     }
     private void Update()
     {
-        if (energy > maxEnergy)
+        if (_energy > _maxEnergy)
         { 
-            energy = maxEnergy;
-            ui_manager.UpdateText();
+            _energy = _maxEnergy;
         }
     }
 
-    public void LevelUp(int xpGained)
+    public void LevelUp(float xpGained)
     {
-        if (xpPoints == xpToLvlUp)
+        float levelsGained = Mathf.FloorToInt(((_xpPoints + xpGained) / _xpToLvlUp) * 10f) / 10f;
+        if (levelsGained >= 1f)
         {
-            level++;
-            xpPoints = 0;
-            ui_manager.UpdateLevel();
-            MaxXpUpdate();
+            if (levelsGained > 1f)
+            {
+                _level++;
+                MaxXpUpdate();
+                LevelUp(levelsGained - 1f);
+            }
+            else
+            {
+                _level++;
+                _xpPoints = (_xpPoints + xpGained) - (levelsGained * _xpToLvlUp);
+                _uiManager.UpdateLevel();
+                MaxXpUpdate();
+            }
         }
-        else if (xpPoints > xpToLvlUp)
+        else
         {
-            level++;
-            xpPoints = xpPoints - xpToLvlUp;
-            ui_manager.UpdateLevel();
-            LevelUp(0);
-            MaxXpUpdate();
-        }
-        else if (xpPoints < xpToLvlUp)
-        {
-            xpPoints += xpGained;
-            LevelUp(0);
+            _xpPoints += xpGained;
         }
     }
     public void MaxXpUpdate()
     {
-        if (level == 0)
-            xpToLvlUp = 100f;
+        if (_level == 0)
+        {
+            float startLevelUp = 100f;
+            _xpToLvlUp = startLevelUp;
+        }
         else
         {
-            xpToLvlUp = xpToLvlUp + level;
+            _xpToLvlUp += _level * 50f;
         }
     }
 
@@ -81,37 +112,33 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(newScene);
     }
-    public void ChangeScene(MinigameType minigame)
-    {
-        switch(minigame)
-        {
-            case MinigameType.None:
-                ChangeScene("Menu");
-                break;
-            case MinigameType.Bathing:
-                ChangeScene("Minigame Banho");
-                break;
-            case MinigameType.Cleaning:
-                ChangeScene("Minigame Arrumar");
-                break;
-            case MinigameType.Walking:
-                ChangeScene("Minigame Caminhar");
-                break;
-        }
-    }
     public void SpendEnergy()
     {
-        if(energy < 1)
+        if (_energy != 0)
+        {
+            _energy--;
+            _uiManager.UpdateText();
+        }
+        else
         {
             Debug.Log("Sem Energia");
         }
     }
     private IEnumerator RechargeEnergy()
     {
-        if(energy < maxEnergy)
-            energy++;
-        yield return new WaitForSecondsRealtime(energyReloadCooldown);
-        StartCoroutine(RechargeEnergy());
-        yield break;
+        if (_maxEnergy - 1 == _energy)
+        {
+            Mathf.Lerp(_energy, _maxEnergy, _energyRenewCd);
+            yield return new WaitUntil(() => _energy == _maxEnergy);
+            _uiManager.UpdateText();
+            yield return new WaitForSeconds(_energyRenewCd + 0.2f);
+            yield return new WaitUntil(() => _energy < _maxEnergy);
+            StartCoroutine(RechargeEnergy());
+        }
+        else
+        {
+            StartCoroutine(RechargeEnergy());
+            yield break;
+        }
     }
 }

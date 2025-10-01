@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static StageManager;
 
 public class UI_Manager : MonoBehaviour
 {
     public static UI_Manager Instance { get; private set; }
 
-    public static GameManager gameManager = GameManager.Instance;
+    private GameManager gameManager;
 
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI energyText;
     public TextMeshProUGUI playerLevelText;
-    public Slider progressBar;
 
     private void Awake()
     {
-        //  N�o tenho certeza se vai ser necessario manter isso como um "Manager"
-
         if (Instance == null)
         {
             Instance = this;
@@ -33,40 +29,31 @@ public class UI_Manager : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
-        if (CurrentMinigame == MinigameType.None)
+        if (StageManager.Instance.currentMinigame == StageManager.MinigameType.None)
         {
             UpdateText();
             UpdateLevel();
             moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
             energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
         }
-        else if (CurrentMinigame == MinigameType.Bathing)
-        {
-            progressBar = FindFirstObjectByType<Slider>().GetComponent<Slider>();
-        }
     }
 
-    void Update()
+    void LateUpdate()
     {
-        //UseJoystick();
-        if (CurrentMinigame == MinigameType.None)
+        if (StageManager.Instance.currentMinigame == StageManager.MinigameType.None)
         {
             UpdateText();
             UpdateLevel();
-        }
-        else if (CurrentMinigame == MinigameType.Bathing)
-        {
-            progressBar.value = StageManager.Instance.GetProgress();
         }
     }
 
     public void UpdateText()
     {
-        moneyText.text = gameManager.money.ToString();
-        energyText.text = $"{gameManager.energy}/{gameManager.maxEnergy}";
+        moneyText.text = gameManager.GetMoney().ToString();
+        energyText.text = $"{gameManager.GetRawEnergy()}/{gameManager.GetMaxEnergy()}";
     }
     public void UpdateLevel()
     {
-        playerLevelText.text = gameManager.level.ToString();
+        playerLevelText.text = gameManager.GetCurrentLevel().ToString();
     }
 }

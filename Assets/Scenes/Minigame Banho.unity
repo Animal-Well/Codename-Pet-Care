@@ -1135,8 +1135,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2311669217160808398, guid: b7b465a76e71f1345b993b9d46e3ac74, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1494877343}
   m_SourcePrefab: {fileID: 100100000, guid: b7b465a76e71f1345b993b9d46e3ac74, type: 3}
+--- !u!1 &1494877342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2311669217160808398, guid: b7b465a76e71f1345b993b9d46e3ac74, type: 3}
+  m_PrefabInstance: {fileID: 1494877341}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1494877343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494877342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24af091b03422247abdd95085f8408a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1629843537
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,13 +1392,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4974287389255625827, guid: 007cfa1baeaf54a46af5be510a5f8346, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1860165131}
   m_SourcePrefab: {fileID: 100100000, guid: 007cfa1baeaf54a46af5be510a5f8346, type: 3}
 --- !u!1 &1860165130 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4974287389255625827, guid: 007cfa1baeaf54a46af5be510a5f8346, type: 3}
   m_PrefabInstance: {fileID: 1860165129}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1860165131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860165130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24af091b03422247abdd95085f8408a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1866817360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,6 +1605,7 @@ GameObject:
   - component: {fileID: 1968669709}
   - component: {fileID: 1968669708}
   - component: {fileID: 1968669707}
+  - component: {fileID: 1968669710}
   m_Layer: 7
   m_Name: Sujeira
   m_TagString: Dirt
@@ -1666,6 +1702,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1968669705}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1968669710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968669705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24af091b03422247abdd95085f8408a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2029225145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1948,6 +1996,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 266114719471344896, guid: c204459aa7bfc6048b0b0e52d607efa2, type: 3}
+      propertyPath: currentMinigame
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 266114719471344896, guid: c204459aa7bfc6048b0b0e52d607efa2, type: 3}
       propertyPath: 'bathObjectives.Array.data[0]'
       value: 
