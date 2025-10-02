@@ -3,35 +3,22 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    //[Header("Cleaing Minigame")]
-
     [Header("Bathing Minigame")]
     [SerializeField] private LayerMask bathingLayers;
     [SerializeField] private GameObject[] bathingObjects;
-    [SerializeField] private GameObject currentBathObject;
-    //private bool _canStartCoroutines = true;
+    [SerializeField] private HeldObject currentHeldObject;
     private Ray ray;
     private RaycastHit hit;
+
+
     private StageManager.MinigameType _playingMinigame = StageManager.MinigameType.None;
 
-    [Header("Walking Minigame")]
-    public float speed = 15f;
-    [SerializeField] private CharacterController _controller;
-    void Start()
-    {
-        if (StageManager.Instance.currentMinigame == StageManager.MinigameType.Walking)
-            _controller = GetComponent<CharacterController>();
-    }
     void Update()
     {
         if (Application.isFocused)
         {
-            if (Application.isEditor)
+            if (Input.GetButton("Fire1"))
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            else if (Input.touchCount > 0)
-                ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-            else
-                return;
 
             _playingMinigame = StageManager.Instance.currentMinigame;
 
@@ -55,57 +42,20 @@ public class PlayerBehaviour : MonoBehaviour
 
         var bathObjectives = StageManager.Instance.GetMinigameObjectives();
 
-        if (Physics.Raycast(ray, out hit, 100f, bathingLayers))
-        {
-            if (hit.collider.gameObject == bathObjectives[(int)progress.GetRawProgress()])
-            {
-                Destroy(hit.collider.gameObject);
-            }
-        }
+        var currentObjective = bathObjectives[(int)progress.GetRawProgress()];
 
-        switch (progress.GetRawProgress())
+        currentHeldObject = currentHeldObject == null ? Instantiate(HeldObject.GetHeldObject()) : currentHeldObject;
+
+        if (Input.GetButton("Fire1"))
         {
-            case 0:
-                if (currentBathObject != bathingObjects[0])
+            if (Physics.Raycast(ray, out hit, 100f, bathingLayers))
+            {
+                if (hit.collider.gameObject == currentObjective)
                 {
-                    ResetHeldObject();
-                    currentBathObject = Instantiate(bathingObjects[0], transform);
+                    Destroy(hit.collider.gameObject);
+
                 }
-                break;
-            case 1:
-                if (currentBathObject != bathingObjects[1])
-                {
-                    ResetHeldObject();
-                    currentBathObject = Instantiate(bathingObjects[1], transform);
-                }
-                break;
-            case 2:
-                if (currentBathObject != bathingObjects[2])
-                {
-                    ResetHeldObject();
-                    currentBathObject = Instantiate(bathingObjects[2], transform);
-                }
-                break;
-                /*
-            default:
-                if (_canStartCoroutines)
-                {
-                    _canStartCoroutines = false;
-                    StartCoroutine(EndMinigameCoroutine());
-                }
-                break;*/
-        }
-        MoveHeldObject();
-    }
-    private void ResetHeldObject()
-    {
-        Destroy(currentBathObject);
-    }
-    private void MoveHeldObject()
-    {
-        if (currentBathObject != null)
-        {
-            currentBathObject.transform.position = Vector3.Lerp(currentBathObject.transform.position, hit.point, 0.2f);
+            }
         }
     }
     private void OnCleaning()

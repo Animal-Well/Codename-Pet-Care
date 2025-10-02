@@ -9,13 +9,14 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     
 
-    private UI_Manager _uiManager;
+    private UiManager _uiManager;
     private PlayerBehaviour _player;
 
     private float _energy = 3, _money = 0, _maxEnergy = 3;
     private int _level = 0;
     private float _xpPoints = 0f, _xpToLvlUp = 100f;
     private float _energyRenewCd = 2f;
+
     public float GetMoney()
     {
         return _money;
@@ -55,7 +56,8 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        _uiManager = UI_Manager.Instance;
+        _uiManager = UiManager.Instance;
+        StageManager.Instance.CheckInstance();
 
         if (_player == null)
             _player = FindFirstObjectByType<PlayerBehaviour>();

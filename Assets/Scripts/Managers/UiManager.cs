@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Manager : MonoBehaviour
+public class UiManager : MonoBehaviour
 {
-    public static UI_Manager Instance { get; private set; }
+    public static UiManager Instance { get; private set; }
 
     private GameManager gameManager;
 
@@ -31,14 +31,12 @@ public class UI_Manager : MonoBehaviour
         gameManager = GameManager.Instance;
         if (StageManager.Instance.currentMinigame == StageManager.MinigameType.None)
         {
-            UpdateText();
-            UpdateLevel();
             moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
             energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
         }
     }
 
-    void LateUpdate()
+    void Update()
     {
         if (StageManager.Instance.currentMinigame == StageManager.MinigameType.None)
         {
@@ -46,7 +44,6 @@ public class UI_Manager : MonoBehaviour
             UpdateLevel();
         }
     }
-
     public void UpdateText()
     {
         moneyText.text = gameManager.GetMoney().ToString();

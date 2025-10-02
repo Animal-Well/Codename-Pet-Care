@@ -13,7 +13,7 @@ public class StageManager : MonoBehaviour
     public ProgressBehaviour ProgressBarBehaviour { get;  private set; }
     public enum MinigameType
     {
-        None = 0,
+        None = 4,
         Bathing = 1,
         Cleaning = 2,
         Walking = 3
@@ -21,21 +21,22 @@ public class StageManager : MonoBehaviour
     public MinigameType currentMinigame = MinigameType.None;
     public GameObject[] GetMinigameObjectives()
     {
-        if (currentMinigame != MinigameType.None)
+        switch (currentMinigame)
         {
-            if (currentMinigame == MinigameType.Bathing)
+            case MinigameType.Bathing:
                 return bathObjectives;
-            else if (currentMinigame == MinigameType.Cleaning)
+            case MinigameType.Cleaning:
                 return cleanObjectives;
-            else if (currentMinigame == MinigameType.Walking)
+            case MinigameType.Walking:
                 return walkObjectives;
-            else
-                return new GameObject[3];
+            case MinigameType.None:
+                return null;
+            default:
+                Debug.LogWarning("Need to implement new Minigame");
+                return new GameObject[0];
         }
-        else
-            return new GameObject[3];
     }
-    private bool IsMinigameCompleted()
+    public bool IsMinigameCompleted()
     {
         if (ProgressBarBehaviour.GetPercentProgress() == 1f)
         {
@@ -45,19 +46,7 @@ public class StageManager : MonoBehaviour
     }
     public void ChangeMinigame(MinigameType newMinigame)
     {
-    }
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(Instance);
-        }
+        currentMinigame = newMinigame;
     }
     private void Start()
     {
@@ -67,66 +56,48 @@ public class StageManager : MonoBehaviour
     private IEnumerator MinigameCoroutine()
     {
 
-        /*
-        switch (CurrentStage)
-        {
-            case MinigameStages.Start:
-                if (CurrentObjectives[0] == null)
-                {
-                    CurrentStage = MinigameStages.Middle;
-                }
-                break;
-            case MinigameStages.Middle:
-                if (CurrentObjectives[1] == null)
-                {
-                    _progressBarBehaviour.AdvanceProgress(1f);
-                    CurrentStage = MinigameStages.End;
-                }
-                break;
-            case MinigameStages.End:
-                if (currentMinigame == MinigameType.Bathing)
-                {
-                    if (CurrentObjectives[2] == null)
-                    {
-                        _progress++;
-                        gameManager.ChangeScene(MinigameType.None);
-                    }
-
-                    if (CurrentObjectives[2] != null && !CurrentObjectives[2].activeSelf)
-                        CurrentObjectives[2].SetActive(true);
-                }
-                break;
-        }
-        */
-
         yield return new WaitForEndOfFrame();
         if (IsMinigameCompleted())
         {
-            StartCoroutine(MinigameCoroutine());
+            NextMinigame();
+            yield break;
         }
         else
         {
+            StartCoroutine(MinigameCoroutine());
             //yield return new WaitUntil(() => )
         }
-
     }
     public void GrowMinigameProgress()
     {
         ProgressBarBehaviour.AdvanceProgress(1);
     }
-    private void NextMinigame()
+    public void CheckInstance()
     {
         if (currentMinigame != MinigameType.None)
         {
-            int newMinigame = (int)currentMinigame + 1;
-            ChangeToMinigameScene((MinigameType)newMinigame);
+            if (Instance != null)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                Instance = this;
+                DontDestroyOnLoad(Instance);
+            }
         }
         else
         {
-            ChangeToMinigameScene(MinigameType.None);
+            Destroy(this.gameObject);
         }
     }
-    public void ChangeToMinigameScene(MinigameType minigame)
+    private void NextMinigame()
+    {
+        int newMinigameIndex = (int)currentMinigame + 1;
+        currentMinigame = (MinigameType)newMinigameIndex;
+        ChangeToMinigameScene(currentMinigame);
+    }
+    private void ChangeToMinigameScene(MinigameType minigame)
     {
         var sceneChanger = GameManager.Instance;
         if (minigame != currentMinigame)

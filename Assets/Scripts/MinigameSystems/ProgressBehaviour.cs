@@ -1,4 +1,3 @@
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,14 +30,15 @@ public class ProgressBehaviour : MonoBehaviour
         _maxProgress = StageManager.Instance.GetMinigameObjectives().Length;
         UpdateSlider();
     }
-    public void AdvanceProgress(int amount)
+    public void AdvanceProgress(float amount)
     {
         if (!(_progress > _maxProgress || _progress + amount > _maxProgress))
         {
-            _progress += amount;
+            float newProgress = _progress + amount;
+            _progress = Mathf.Lerp(_progress, newProgress, Time.deltaTime);
         }
         else
-            _progress = _maxProgress;
+            _progress = Mathf.Lerp(_progress, _maxProgress, Time.deltaTime);
         UpdateSlider();
     }
     private void UpdateSlider()
