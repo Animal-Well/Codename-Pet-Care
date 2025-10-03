@@ -57,7 +57,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _uiManager = UiManager.Instance;
-        StageManager.Instance.CheckInstance();
 
         if (_player == null)
             _player = FindFirstObjectByType<PlayerBehaviour>();

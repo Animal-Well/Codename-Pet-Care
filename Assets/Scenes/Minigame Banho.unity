@@ -876,9 +876,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bathObjectives:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1968669705}
+  - {fileID: 1494877342}
+  - {fileID: 1860165130}
   cleanObjectives:
   - {fileID: 0}
   - {fileID: 0}

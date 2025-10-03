@@ -44,7 +44,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         var currentObjective = bathObjectives[(int)progress.GetRawProgress()];
 
-        currentHeldObject = currentHeldObject == null ? Instantiate(HeldObject.GetHeldObject()) : currentHeldObject;
+        //currentHeldObject = currentHeldObject == null ? Instantiate(HeldObject.GetHeldObject()) : currentHeldObject;
 
         if (Input.GetButton("Fire1"))
         {
@@ -53,7 +53,7 @@ public class PlayerBehaviour : MonoBehaviour
                 if (hit.collider.gameObject == currentObjective)
                 {
                     Destroy(hit.collider.gameObject);
-
+                    StageManager.Instance.GrowMinigameProgress();
                 }
             }
         }

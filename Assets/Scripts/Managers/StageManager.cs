@@ -18,7 +18,7 @@ public class StageManager : MonoBehaviour
         Cleaning = 2,
         Walking = 3
     }
-    public MinigameType currentMinigame = MinigameType.None;
+    public MinigameType currentMinigame = MinigameType.Bathing;
     public GameObject[] GetMinigameObjectives()
     {
         switch (currentMinigame)
@@ -47,6 +47,10 @@ public class StageManager : MonoBehaviour
     public void ChangeMinigame(MinigameType newMinigame)
     {
         currentMinigame = newMinigame;
+    }
+    private void Awake()
+    {
+        CheckInstance();
     }
     private void Start()
     {
@@ -83,7 +87,7 @@ public class StageManager : MonoBehaviour
             else
             {
                 Instance = this;
-                DontDestroyOnLoad(Instance);
+                //DontDestroyOnLoad(Instance);
             }
         }
         else
