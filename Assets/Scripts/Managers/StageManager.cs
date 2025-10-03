@@ -5,15 +5,16 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance { get; private set; }
 
-    
-    [SerializeField] private GameObject[] bathObjectives = new GameObject[3];
-    [SerializeField] private GameObject[] cleanObjectives = new GameObject[3];
-    [SerializeField] private GameObject[] walkObjectives = new GameObject[3];
+    public string[] objectiveTags = new string[3] { "BathObjectives", "CleaningObjectives", "WalkObjectives" };
+    private GameObject[] GetObjectsByTag(string tag)
+    {
+        return GameObject.FindGameObjectsWithTag(tag);
+    }
 
     public ProgressBehaviour ProgressBarBehaviour { get;  private set; }
     public enum MinigameType
     {
-        None = 4,
+        None = 0,
         Bathing = 1,
         Cleaning = 2,
         Walking = 3
@@ -24,11 +25,11 @@ public class StageManager : MonoBehaviour
         switch (currentMinigame)
         {
             case MinigameType.Bathing:
-                return bathObjectives;
+                return GetObjectsByTag(objectiveTags[0]);
             case MinigameType.Cleaning:
-                return cleanObjectives;
+                return GetObjectsByTag(objectiveTags[1]);
             case MinigameType.Walking:
-                return walkObjectives;
+                return GetObjectsByTag(objectiveTags[2]);
             case MinigameType.None:
                 return null;
             default:
@@ -63,13 +64,14 @@ public class StageManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         if (IsMinigameCompleted())
         {
+            yield return new WaitForSeconds(0.6f);
             NextMinigame();
             yield break;
         }
         else
         {
+            yield return new WaitUntil(() => IsMinigameCompleted());
             StartCoroutine(MinigameCoroutine());
-            //yield return new WaitUntil(() => )
         }
     }
     public void GrowMinigameProgress()
@@ -87,7 +89,7 @@ public class StageManager : MonoBehaviour
             else
             {
                 Instance = this;
-                //DontDestroyOnLoad(Instance);
+                DontDestroyOnLoad(Instance);
             }
         }
         else
@@ -98,6 +100,9 @@ public class StageManager : MonoBehaviour
     private void NextMinigame()
     {
         int newMinigameIndex = (int)currentMinigame + 1;
+
+        if (newMinigameIndex > 3) newMinigameIndex = 0;
+
         currentMinigame = (MinigameType)newMinigameIndex;
         ChangeToMinigameScene(currentMinigame);
     }
