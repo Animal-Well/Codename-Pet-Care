@@ -13,15 +13,14 @@ public class PlayerBehaviour : MonoBehaviour
 
     private StageManager.MinigameType _playingMinigame = StageManager.MinigameType.None;
 
+    private void Start()
+    {
+        _playingMinigame = StageManager.Instance.currentMinigame;
+    }
     void Update()
     {
         if (Application.isFocused)
         {
-            if (Input.GetButton("Fire1"))
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            _playingMinigame = StageManager.Instance.currentMinigame;
-
             switch (_playingMinigame)
             {
                 case StageManager.MinigameType.Bathing:
@@ -48,6 +47,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (Input.GetButton("Fire1"))
         {
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
             if (Physics.Raycast(ray, out hit, 100f, bathingLayers))
             {
                 if (hit.collider.gameObject == currentObjective)
