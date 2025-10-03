@@ -15,24 +15,21 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Start()
     {
-        _playingMinigame = StageManager.Instance.currentMinigame;
+
     }
     void Update()
     {
-        if (Application.isFocused)
+        switch (_playingMinigame)
         {
-            switch (_playingMinigame)
-            {
-                case StageManager.MinigameType.Bathing:
-                    OnBathing();
-                    break;
-                case StageManager.MinigameType.Cleaning:
-                    OnCleaning();
-                    break;
-                case StageManager.MinigameType.Walking:
-                    //Call Walking minigame functions
-                    break;
-            }
+            case StageManager.MinigameType.Bathing:
+                OnBathing();
+                break;
+            case StageManager.MinigameType.Cleaning:
+                OnCleaning();
+                break;
+            case StageManager.MinigameType.Walking:
+                //Call Walking minigame functions
+                break;
         }
     }
     private void OnBathing()
@@ -53,8 +50,11 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 if (hit.collider.gameObject == currentObjective)
                 {
-                    Destroy(hit.collider.gameObject);
-                    StageManager.Instance.GrowMinigameProgress();
+                    /*Destroy(currentObjective);
+                    StageManager.Instance.GrowMinigameProgress();*/
+
+                    Debug.DrawLine(ray.origin, hit.point);
+                    Debug.DebugBreak();
                 }
             }
         }
