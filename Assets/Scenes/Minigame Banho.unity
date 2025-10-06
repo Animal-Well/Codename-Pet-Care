@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 1168804}
   - component: {fileID: 1168803}
   - component: {fileID: 1168802}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Pet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -766,6 +766,7 @@ GameObject:
   m_Component:
   - component: {fileID: 860777292}
   - component: {fileID: 860777293}
+  - component: {fileID: 860777294}
   m_Layer: 5
   m_Name: Progress Bar
   m_TagString: Untagged
@@ -846,6 +847,21 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &860777294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860777291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e31e2041758bb604ebf6120446473c12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxProgress: 3
+  _progress: 0
+  _progressSlider: {fileID: 0}
 --- !u!1 &875725145
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,18 +891,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f1ebf9ea3c91c4e95f2a8f9b3d6aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bathObjectives:
-  - {fileID: 1968669705}
-  - {fileID: 1494877342}
-  - {fileID: 1860165130}
-  cleanObjectives:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  walkObjectives:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  objectiveTags:
+  - BathObjective
+  - CleanObjective
+  - WalkObjective
   currentMinigame: 1
 --- !u!4 &875725147
 Transform:
@@ -1247,28 +1255,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2311669217160808398, guid: b7b465a76e71f1345b993b9d46e3ac74, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1494877343}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7b465a76e71f1345b993b9d46e3ac74, type: 3}
---- !u!1 &1494877342 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2311669217160808398, guid: b7b465a76e71f1345b993b9d46e3ac74, type: 3}
-  m_PrefabInstance: {fileID: 1494877341}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1494877343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1494877342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e24af091b03422247abdd95085f8408a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1629843537
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,7 +1269,7 @@ GameObject:
   - component: {fileID: 1629843541}
   - component: {fileID: 1629843540}
   - component: {fileID: 1629843539}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Paw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1497,35 +1485,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoapRemains
       objectReference: {fileID: 0}
-    - target: {fileID: 4974287389255625827, guid: 007cfa1baeaf54a46af5be510a5f8346, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4974287389255625827, guid: 007cfa1baeaf54a46af5be510a5f8346, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1860165131}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 007cfa1baeaf54a46af5be510a5f8346, type: 3}
---- !u!1 &1860165130 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4974287389255625827, guid: 007cfa1baeaf54a46af5be510a5f8346, type: 3}
-  m_PrefabInstance: {fileID: 1860165129}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1860165131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860165130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e24af091b03422247abdd95085f8408a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1866817360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1718,9 +1682,9 @@ GameObject:
   - component: {fileID: 1968669708}
   - component: {fileID: 1968669707}
   - component: {fileID: 1968669710}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sujeira
-  m_TagString: Dirt
+  m_TagString: BathObjective
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2110,6 +2074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2085515382}
   - component: {fileID: 2085515381}
+  - component: {fileID: 2085515383}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2129,14 +2094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd2d6e53f669d6443b3b6742f6eae06b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bathingLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  bathingObjects:
-  - {fileID: 7557623584065256554, guid: a4110beb2f93f274a931aaedd0b29d4f, type: 3}
-  - {fileID: 3884620673419726690, guid: 5084761bf9787ec47b64ed2d204b1a9e, type: 3}
-  - {fileID: 4177303645313965925, guid: f164826b7b8d7ad41a4d6bc93eb6272a, type: 3}
-  currentHeldObject: {fileID: 0}
+  heldObject: {fileID: 2085515383}
 --- !u!4 &2085515382
 Transform:
   m_ObjectHideFlags: 0
@@ -2152,6 +2110,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2085515383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085515380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed6efe326a2a824d894a9438a3402d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdables:
+  - {fileID: 7557623584065256554, guid: a4110beb2f93f274a931aaedd0b29d4f, type: 3}
+  - {fileID: 3884620673419726690, guid: 5084761bf9787ec47b64ed2d204b1a9e, type: 3}
+  - {fileID: 4177303645313965925, guid: f164826b7b8d7ad41a4d6bc93eb6272a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

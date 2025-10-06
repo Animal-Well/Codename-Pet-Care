@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
         if (_player == null)
             _player = FindFirstObjectByType<PlayerBehaviour>();
         
-        StartCoroutine(RechargeEnergy());
+        //StartCoroutine(RechargeEnergy());
     }
     private void Update()
     {

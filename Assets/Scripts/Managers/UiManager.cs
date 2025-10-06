@@ -29,7 +29,7 @@ public class UiManager : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
-        if (StageManager.Instance.currentMinigame == StageManager.MinigameType.None)
+        if (StageManager.Instance == null)
         {
             moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
             energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();

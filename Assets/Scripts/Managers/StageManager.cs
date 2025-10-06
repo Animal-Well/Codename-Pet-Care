@@ -5,15 +5,16 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance { get; private set; }
 
-    
-    [SerializeField] private GameObject[] bathObjectives = new GameObject[3];
-    [SerializeField] private GameObject[] cleanObjectives = new GameObject[3];
-    [SerializeField] private GameObject[] walkObjectives = new GameObject[3];
+    public string[] objectiveTags;
+    private GameObject[] GetObjectivesByTag(string tag)
+    {
+        return GameObject.FindGameObjectsWithTag(tag);
+    }
 
     public ProgressBehaviour ProgressBarBehaviour { get;  private set; }
     public enum MinigameType
     {
-        None = 4,
+        None = 0,
         Bathing = 1,
         Cleaning = 2,
         Walking = 3
@@ -24,11 +25,11 @@ public class StageManager : MonoBehaviour
         switch (currentMinigame)
         {
             case MinigameType.Bathing:
-                return bathObjectives;
+                return GetObjectivesByTag(objectiveTags[0]);
             case MinigameType.Cleaning:
-                return cleanObjectives;
+                return GetObjectivesByTag(objectiveTags[1]);
             case MinigameType.Walking:
-                return walkObjectives;
+                return GetObjectivesByTag(objectiveTags[2]);
             case MinigameType.None:
                 return null;
             default:
@@ -38,11 +39,7 @@ public class StageManager : MonoBehaviour
     }
     public bool IsMinigameCompleted()
     {
-        if (ProgressBarBehaviour.GetPercentProgress() == 1f)
-        {
-            return true;
-        }
-        return false;
+        return ProgressBarBehaviour.GetPercentProgress() == 1f;
     }
     public void ChangeMinigame(MinigameType newMinigame)
     {
@@ -61,20 +58,14 @@ public class StageManager : MonoBehaviour
     {
 
         yield return new WaitForEndOfFrame();
-        if (IsMinigameCompleted())
-        {
-            NextMinigame();
-            yield break;
-        }
-        else
-        {
-            StartCoroutine(MinigameCoroutine());
-            //yield return new WaitUntil(() => )
-        }
+        yield return new WaitUntil(() => IsMinigameCompleted());
+        NextMinigame();
+        yield break;
     }
     public void GrowMinigameProgress()
     {
         ProgressBarBehaviour.AdvanceProgress(1);
+        GetMinigameObjectives()[3].SetActive(!GetMinigameObjectives()[0].activeInHierarchy);
     }
     public void CheckInstance()
     {
@@ -97,8 +88,12 @@ public class StageManager : MonoBehaviour
     }
     private void NextMinigame()
     {
-        int newMinigameIndex = (int)currentMinigame + 1;
+        int newMinigameIndex = (int)currentMinigame + 1 > 3 ? 0 : (int)currentMinigame + 1;
+
         currentMinigame = (MinigameType)newMinigameIndex;
+
+        GameManager.Instance.LevelUp(100f);
+
         ChangeToMinigameScene(currentMinigame);
     }
     private void ChangeToMinigameScene(MinigameType minigame)

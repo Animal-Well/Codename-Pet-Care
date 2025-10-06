@@ -4,56 +4,52 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     [Header("Bathing Minigame")]
-    [SerializeField] private LayerMask bathingLayers;
-    [SerializeField] private GameObject[] bathingObjects;
-    [SerializeField] private HeldObject currentHeldObject;
+    [SerializeField] private HeldObject heldObject;
+    private GameObject[] _allObjectives;
+    private ProgressBehaviour _progress;
     private Ray ray;
     private RaycastHit hit;
 
 
     private StageManager.MinigameType _playingMinigame = StageManager.MinigameType.None;
+    private void Start()
+    {
+        heldObject = GetComponent<HeldObject>();
+
+        _playingMinigame = StageManager.Instance.currentMinigame;
+    }
 
     void Update()
     {
-        if (Application.isFocused)
+        _allObjectives = StageManager.Instance.GetMinigameObjectives();
+        switch (_playingMinigame)
         {
-            if (Input.GetButton("Fire1"))
-                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            _playingMinigame = StageManager.Instance.currentMinigame;
-
-            switch (_playingMinigame)
-            {
-                case StageManager.MinigameType.Bathing:
-                    OnBathing();
-                    break;
-                case StageManager.MinigameType.Cleaning:
-                    OnCleaning();
-                    break;
-                case StageManager.MinigameType.Walking:
-                    //Call Walking minigame functions
-                    break;
-            }
+            case StageManager.MinigameType.Bathing:
+                OnBathing();
+                break;
+            case StageManager.MinigameType.Cleaning:
+                OnCleaning();
+                break;
+            case StageManager.MinigameType.Walking:
+                //Call Walking minigame functions
+                break;
         }
     }
     private void OnBathing()
     {
-        var progress = StageManager.Instance.ProgressBarBehaviour;
+        _progress = StageManager.Instance.ProgressBarBehaviour;
 
-        var bathObjectives = StageManager.Instance.GetMinigameObjectives();
-
-        var currentObjective = bathObjectives[(int)progress.GetRawProgress()];
-
-        //currentHeldObject = currentHeldObject == null ? Instantiate(HeldObject.GetHeldObject()) : currentHeldObject;
+        var currentObjective = _allObjectives[(int)_progress.GetRawProgress()];
 
         if (Input.GetButton("Fire1"))
         {
-            if (Physics.Raycast(ray, out hit, 100f, bathingLayers))
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
             {
+                heldObject.MoveHeldObject(hit.point);
                 if (hit.collider.gameObject == currentObjective)
                 {
-                    Destroy(hit.collider.gameObject);
-                    StageManager.Instance.GrowMinigameProgress();
+                    hit.collider.gameObject.SetActive(false);
                 }
             }
         }
