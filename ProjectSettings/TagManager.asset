@@ -8,11 +8,7 @@ TagManager:
   - Money
   - Energy
   - SelectIndicator
-  - RightSideScreen
-  - LeftSideScreen
-  - Nails
-  - Dirt
-  - Shower
+  - BathObjectives
   layers:
   - Default
   - TransparentFX

@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 951c871c063e39b4eb68857a6740101a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 14.719999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 951c871c063e39b4eb68857a6740101a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 11.908
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 951c871c063e39b4eb68857a6740101a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 15.606164
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 951c871c063e39b4eb68857a6740101a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 951c871c063e39b4eb68857a6740101a, type: 3}
       propertyPath: m_TagString
-      value: Nails
+      value: BathObjectives
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -86,6 +86,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 951c871c063e39b4eb68857a6740101a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 303025938971045548}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 951c871c063e39b4eb68857a6740101a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5176474542596778164}
   m_SourcePrefab: {fileID: 100100000, guid: 951c871c063e39b4eb68857a6740101a, type: 3}
 --- !u!1 &2311669217160808398 stripped
 GameObject:
@@ -135,3 +138,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &5176474542596778164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311669217160808398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24af091b03422247abdd95085f8408a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
