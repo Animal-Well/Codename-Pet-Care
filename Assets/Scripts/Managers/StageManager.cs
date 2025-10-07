@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,7 +9,9 @@ public class StageManager : MonoBehaviour
     public string[] objectiveTags;
     private GameObject[] GetObjectivesByTag(string tag)
     {
-        return GameObject.FindGameObjectsWithTag(tag);
+        var foundObjects = GameObject.FindGameObjectsWithTag(tag);
+        Array.Sort(foundObjects, (a, b) => a.GetComponent<ObjectiveCheck>().objectiveIndex - b.GetComponent<ObjectiveCheck>().objectiveIndex);
+        return foundObjects;
     }
 
     public ProgressBehaviour ProgressBarBehaviour { get;  private set; }
@@ -53,6 +56,9 @@ public class StageManager : MonoBehaviour
     {
         ProgressBarBehaviour = FindFirstObjectByType<ProgressBehaviour>();
         StartCoroutine(MinigameCoroutine());
+
+        if(currentMinigame == MinigameType.Bathing)
+            GetMinigameObjectives()[3].SetActive(false);
     }
     private IEnumerator MinigameCoroutine()
     {

@@ -39,7 +39,11 @@ public class PlayerBehaviour : MonoBehaviour
     {
         _progress = StageManager.Instance.ProgressBarBehaviour;
 
+        Debug.Log(_progress.GetRawProgress());
+
         var currentObjective = _allObjectives[(int)_progress.GetRawProgress()];
+
+        Debug.Log(currentObjective);
 
         if (Input.GetButton("Fire1"))
         {

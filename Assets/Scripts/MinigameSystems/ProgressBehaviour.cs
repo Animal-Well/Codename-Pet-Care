@@ -35,10 +35,10 @@ public class ProgressBehaviour : MonoBehaviour
         if (!(_progress > _maxProgress || _progress + amount > _maxProgress))
         {
             float newProgress = _progress + amount;
-            _progress = Mathf.Lerp(_progress, newProgress, Time.deltaTime);
+            _progress = Mathf.Lerp(_progress, newProgress, Time.deltaTime * 0.5f);
         }
         else
-            _progress = Mathf.Lerp(_progress, _maxProgress, Time.deltaTime);
+            _progress = Mathf.Lerp(_progress, _maxProgress, Time.deltaTime * 0.5f);
         UpdateSlider();
     }
     private void UpdateSlider()
