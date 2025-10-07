@@ -47,6 +47,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (Input.GetButton("Fire1"))
         {
+            if (!heldObject.enabled)
+                heldObject.enabled = true;
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
@@ -56,6 +58,10 @@ public class PlayerBehaviour : MonoBehaviour
                     hit.collider.gameObject.SetActive(false);
                 }
             }
+        }
+        else if (heldObject.enabled)
+        {
+            heldObject.enabled = false;
         }
     }
     private void OnCleaning()
