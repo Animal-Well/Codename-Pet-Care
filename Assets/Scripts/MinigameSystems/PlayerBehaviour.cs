@@ -41,7 +41,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         Debug.Log(_progress.GetRawProgress());
 
-        var currentObjective = _allObjectives[(int)_progress.GetRawProgress()];
+        var currentObjective = _allObjectives[_progress.GetRawProgress()];
 
         Debug.Log(currentObjective);
 

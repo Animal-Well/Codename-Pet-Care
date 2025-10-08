@@ -4,15 +4,19 @@ using UnityEngine.UI;
 public class ProgressBehaviour : MonoBehaviour
 {
     [SerializeField] private int _maxProgress = 3;
-    [SerializeField] private float _progress = 0f;
+    [SerializeField] private int _progress = 0;
     [SerializeField] private Slider _progressSlider;
-    public float GetRawProgress()
+    public int GetRawProgress()
     {
         return _progress;
     }
     public float GetPercentProgress()
     {
         return _progress / _maxProgress;
+    }
+    public bool IsProgressComplete()
+    {
+        return GetPercentProgress() == 1f;
     }
     private void Start()
     {
@@ -21,7 +25,7 @@ public class ProgressBehaviour : MonoBehaviour
     }
     public void ResetProgress()
     {
-        _progress = 0f;
+        _progress = 0;
         SetMaxProgress();
         UpdateSlider();
     }
@@ -30,15 +34,15 @@ public class ProgressBehaviour : MonoBehaviour
         _maxProgress = StageManager.Instance.GetMinigameObjectives().Length;
         UpdateSlider();
     }
-    public void AdvanceProgress(float amount)
+    public void AdvanceProgress()
     {
-        if (!(_progress > _maxProgress || _progress + amount > _maxProgress))
+        int amount = _progress + 1;
+        if (!(amount > _maxProgress))
         {
-            float newProgress = _progress + amount;
-            _progress = Mathf.Lerp(_progress, newProgress, Time.deltaTime * 0.5f);
+            _progress = amount;
         }
         else
-            _progress = Mathf.Lerp(_progress, _maxProgress, Time.deltaTime * 0.5f);
+            _progress = _maxProgress;
         UpdateSlider();
     }
     private void UpdateSlider()

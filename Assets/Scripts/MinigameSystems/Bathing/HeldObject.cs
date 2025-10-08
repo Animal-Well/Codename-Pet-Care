@@ -15,10 +15,6 @@ public class HeldObject : MonoBehaviour
     private void ResetHeldObject()
     {
         Destroy(CurrentHeldObject);
-        if (_progress.GetPercentProgress() < 1f)
-        {
-            NextHeldObject();
-        }
     }
     private void NextHeldObject()
     {
@@ -42,7 +38,7 @@ public class HeldObject : MonoBehaviour
     public IEnumerator CheckHeldObject()
     {
         _progress = StageManager.Instance.ProgressBarBehaviour;
-        int nextExpectedProgress = (int)_progress.GetRawProgress() + 1;
+        int nextExpectedProgress = _progress.GetRawProgress() + 1;
         yield return new WaitForEndOfFrame();
 
 

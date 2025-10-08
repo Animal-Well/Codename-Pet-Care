@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ public class StageManager : MonoBehaviour
     private GameObject[] GetObjectivesByTag(string tag)
     {
         var foundObjects = GameObject.FindGameObjectsWithTag(tag);
-        Array.Sort(foundObjects, (a, b) => a.GetComponent<ObjectiveCheck>().objectiveIndex - b.GetComponent<ObjectiveCheck>().objectiveIndex);
+        //Array.Sort(foundObjects, (a, b) => a.GetComponent<ObjectiveCheck>().objectiveIndex - b.GetComponent<ObjectiveCheck>().objectiveIndex);
         return foundObjects;
     }
 
@@ -40,10 +39,6 @@ public class StageManager : MonoBehaviour
                 return new GameObject[0];
         }
     }
-    public bool IsMinigameCompleted()
-    {
-        return ProgressBarBehaviour.GetPercentProgress() == 1f;
-    }
     public void ChangeMinigame(MinigameType newMinigame)
     {
         currentMinigame = newMinigame;
@@ -56,22 +51,14 @@ public class StageManager : MonoBehaviour
     {
         ProgressBarBehaviour = FindFirstObjectByType<ProgressBehaviour>();
         StartCoroutine(MinigameCoroutine());
-
-        if(currentMinigame == MinigameType.Bathing)
-            GetMinigameObjectives()[3].SetActive(false);
     }
     private IEnumerator MinigameCoroutine()
     {
 
         yield return new WaitForEndOfFrame();
-        yield return new WaitUntil(() => IsMinigameCompleted());
+        yield return new WaitUntil(() => ProgressBarBehaviour.IsProgressComplete());
         NextMinigame();
         yield break;
-    }
-    public void GrowMinigameProgress()
-    {
-        ProgressBarBehaviour.AdvanceProgress(1);
-        GetMinigameObjectives()[3].SetActive(!GetMinigameObjectives()[0].activeInHierarchy);
     }
     public void CheckInstance()
     {
