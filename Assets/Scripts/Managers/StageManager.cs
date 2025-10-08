@@ -5,14 +5,6 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance { get; private set; }
 
-    public string[] objectiveTags;
-    private GameObject[] GetObjectivesByTag(string tag)
-    {
-        var foundObjects = GameObject.FindGameObjectsWithTag(tag);
-        //Array.Sort(foundObjects, (a, b) => a.GetComponent<ObjectiveCheck>().objectiveIndex - b.GetComponent<ObjectiveCheck>().objectiveIndex);
-        return foundObjects;
-    }
-
     public ProgressBehaviour ProgressBarBehaviour { get;  private set; }
     public enum MinigameType
     {
@@ -21,23 +13,10 @@ public class StageManager : MonoBehaviour
         Cleaning = 2,
         Walking = 3
     }
-    public MinigameType currentMinigame = MinigameType.Bathing;
-    public GameObject[] GetMinigameObjectives()
+    public MinigameType currentMinigame = MinigameType.None;
+    public ObjectiveCheck[] GetMinigameObjectives()
     {
-        switch (currentMinigame)
-        {
-            case MinigameType.Bathing:
-                return GetObjectivesByTag(objectiveTags[0]);
-            case MinigameType.Cleaning:
-                return GetObjectivesByTag(objectiveTags[1]);
-            case MinigameType.Walking:
-                return GetObjectivesByTag(objectiveTags[2]);
-            case MinigameType.None:
-                return null;
-            default:
-                Debug.LogWarning("Need to implement new Minigame");
-                return new GameObject[0];
-        }
+        return FindObjectsByType<ObjectiveCheck>(FindObjectsInactive.Include, FindObjectsSortMode.None);
     }
     public void ChangeMinigame(MinigameType newMinigame)
     {
@@ -45,7 +24,15 @@ public class StageManager : MonoBehaviour
     }
     private void Awake()
     {
-        CheckInstance();
+        if (Instance != null)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(Instance);
+        }
     }
     private void Start()
     {
@@ -64,15 +51,7 @@ public class StageManager : MonoBehaviour
     {
         if (currentMinigame != MinigameType.None)
         {
-            if (Instance != null)
-            {
-                Destroy(this.gameObject);
-            }
-            else
-            {
-                Instance = this;
-                //DontDestroyOnLoad(Instance);
-            }
+            
         }
         else
         {

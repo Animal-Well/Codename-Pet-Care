@@ -2,12 +2,20 @@ using UnityEngine;
 
 public class BathMinigame : MonoBehaviour
 {
+    public enum ObjectiveTypes
+    {
+        Dirt = 1,
+        Nail = 2,
+        SoapRemains = 3
+    }
+    private ProgressBehaviour _progress;
     void Start()
     {
+        _progress = StageManager.Instance.ProgressBarBehaviour;
         InitiateBathMinigame();
     }
-    public void InitiateBathMinigame()
+    private void InitiateBathMinigame()
     {
-        //currentMinigame = MinigameType.Bathing;
+        StageManager.Instance.currentMinigame = StageManager.MinigameType.Bathing;
     }
 }

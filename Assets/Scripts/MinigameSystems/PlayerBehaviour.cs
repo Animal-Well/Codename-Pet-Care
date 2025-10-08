@@ -5,7 +5,6 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [Header("Bathing Minigame")]
     [SerializeField] private HeldObject heldObject;
-    private GameObject[] _allObjectives;
     private ProgressBehaviour _progress;
     private Ray ray;
     private RaycastHit hit;
@@ -21,7 +20,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Update()
     {
-        _allObjectives = StageManager.Instance.GetMinigameObjectives();
         switch (_playingMinigame)
         {
             case StageManager.MinigameType.Bathing:
@@ -38,30 +36,16 @@ public class PlayerBehaviour : MonoBehaviour
     private void OnBathing()
     {
         _progress = StageManager.Instance.ProgressBarBehaviour;
+        Debug.Log($"Progress: {_progress.GetRawProgress()}");
 
-        Debug.Log(_progress.GetRawProgress());
-
-        var currentObjective = _allObjectives[_progress.GetRawProgress()];
-
-        Debug.Log(currentObjective);
-
-        if (Input.GetButton("Fire1"))
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit))
         {
-            if (!heldObject.enabled)
-                heldObject.enabled = true;
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
+            heldObject.MoveHeldObject(hit.point);
+            if (hit.collider.TryGetComponent<ObjectiveCheck>(out ObjectiveCheck check))
             {
-                heldObject.MoveHeldObject(hit.point);
-                if (hit.collider.gameObject == currentObjective)
-                {
-                    hit.collider.gameObject.SetActive(false);
-                }
+                //check.gameObject.SetActive(!(check.objectiveType == heldObject.targetObjective));
             }
-        }
-        else if (heldObject.enabled)
-        {
-            heldObject.enabled = false;
         }
     }
     private void OnCleaning()
