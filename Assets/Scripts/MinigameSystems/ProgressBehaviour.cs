@@ -6,17 +6,9 @@ public class ProgressBehaviour : MonoBehaviour
     [SerializeField] private int _maxProgress = 3;
     [SerializeField] private int _progress = 0;
     [SerializeField] private Slider _progressSlider;
-    public int GetRawProgress()
-    {
-        return _progress;
-    }
-    public float GetPercentProgress()
-    {
-        return _progress / _maxProgress;
-    }
     public bool IsProgressComplete()
     {
-        return GetPercentProgress() == 1f;
+        return _progressSlider.normalizedValue == 1f;
     }
     private void Start()
     {
@@ -47,6 +39,7 @@ public class ProgressBehaviour : MonoBehaviour
     }
     private void UpdateSlider()
     {
-        _progressSlider.value = GetPercentProgress();
+        _progressSlider.maxValue = _maxProgress;
+        _progressSlider.value = _progress;
     }
 }

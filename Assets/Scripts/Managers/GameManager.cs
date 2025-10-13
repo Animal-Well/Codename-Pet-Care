@@ -2,16 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
-    
+    public static GameManager Instance { get; private set; }    
 
-    private UiManager _uiManager;
     private PlayerBehaviour _player;
 
+    public UnityEvent UiEvent;
     private float _energy = 3, _money = 0, _maxEnergy = 3;
     private int _level = 0;
     private float _xpPoints = 0f, _xpToLvlUp = 100f;
@@ -56,31 +56,23 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        _uiManager = UiManager.Instance;
-
         if (_player == null)
             _player = FindFirstObjectByType<PlayerBehaviour>();
-        
-        //StartCoroutine(RechargeEnergy());
-    }
-    private void Update()
-    {
+
         if (_energy > _maxEnergy)
-        { 
+        {
             _energy = _maxEnergy;
         }
     }
     public void EarnMoney(float amount)
     {
         _money += amount;
-        _uiManager.UpdateText();
     }
     public void SpendMoney(float amount)
     {
         if (_money - amount >= 0)
         {
             _money -= amount;
-            _uiManager.UpdateText();
         }
         else
         {
@@ -102,7 +94,6 @@ public class GameManager : MonoBehaviour
             {
                 _level++;
                 _xpPoints = (_xpPoints + xpGained) - (levelsGained * _xpToLvlUp);
-                _uiManager.UpdateLevel();
                 MaxXpUpdate();
             }
         }
@@ -133,7 +124,6 @@ public class GameManager : MonoBehaviour
         if (_energy != 0)
         {
             _energy--;
-            _uiManager.UpdateText();
         }
         else
         {
@@ -142,11 +132,10 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator RechargeEnergy()
     {
-        if (_maxEnergy - 1 == _energy)
+        if (_maxEnergy > _energy)
         {
             Mathf.Lerp(_energy, _maxEnergy, _energyRenewCd);
             yield return new WaitUntil(() => _energy == _maxEnergy);
-            _uiManager.UpdateText();
             yield return new WaitForSeconds(_energyRenewCd + 0.2f);
             yield return new WaitUntil(() => _energy < _maxEnergy);
             StartCoroutine(RechargeEnergy());

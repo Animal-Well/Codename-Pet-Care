@@ -4,9 +4,16 @@ public class ObjectiveCheck : MonoBehaviour
 {
     public BathMinigame.ObjectiveTypes objectiveType = BathMinigame.ObjectiveTypes.Dirt;
 
-    private void OnDisable()
+    [SerializeField] private bool unlocksNewObjective;
+    [SerializeField] private GameObject objectiveToUnlock;
+
+    public void ClearObjective()
     {
-        Debug.Log("Disabled");
+        if (objectiveToUnlock != null)
+        {
+            objectiveToUnlock.SetActive(unlocksNewObjective);
+        }
         StageManager.Instance.ProgressBarBehaviour.AdvanceProgress();
+        gameObject.SetActive(false);
     }
 }

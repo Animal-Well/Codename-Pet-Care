@@ -1,0 +1,5 @@
+D:/Portifolio/Unity/CPC/Codename-Pet-Care/.utmp/RelWithDebInfo/1x556w6n/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Portifolio/Unity/CPC/Codename-Pet-Care/.utmp/RelWithDebInfo/1x556w6n/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+D:/Portifolio/Unity/CPC/Codename-Pet-Care/.utmp/RelWithDebInfo/1x556w6n/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+D:/Portifolio/Unity/CPC/Codename-Pet-Care/.utmp/RelWithDebInfo/1x556w6n/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+D:/Portifolio/Unity/CPC/Codename-Pet-Care/.utmp/RelWithDebInfo/1x556w6n/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir

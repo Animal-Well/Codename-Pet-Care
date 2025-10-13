@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,36 +20,25 @@ public class UiManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
     void Start()
     {
         gameManager = GameManager.Instance;
-        if (StageManager.Instance != null)
-        {
-
-        }
-        else
+    }
+    public void DrawGameMenu()
+    {
+        if (moneyText || energyText == null)
         {
             moneyText = GameObject.FindGameObjectWithTag("Money").GetComponent<TextMeshProUGUI>();
             energyText = GameObject.FindGameObjectWithTag("Energy").GetComponent<TextMeshProUGUI>();
         }
     }
-
-    void Update()
+    public void RedrawGameMenu()
     {
-        if (StageManager.Instance.currentMinigame == StageManager.MinigameType.None)
-        {
-            UpdateText();
-            UpdateLevel();
-        }
+        UpdateText();
     }
-    public void UpdateText()
+    private void UpdateText()
     {
         moneyText.text = gameManager.GetMoney().ToString();
         energyText.text = $"{gameManager.GetRawEnergy()}/{gameManager.GetMaxEnergy()}";

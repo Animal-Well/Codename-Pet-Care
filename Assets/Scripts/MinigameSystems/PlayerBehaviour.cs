@@ -13,7 +13,7 @@ public class PlayerBehaviour : MonoBehaviour
     private StageManager.MinigameType _playingMinigame = StageManager.MinigameType.None;
     private void Start()
     {
-        heldObject = GetComponent<HeldObject>();
+        heldObject = FindFirstObjectByType<HeldObject>();
 
         _playingMinigame = StageManager.Instance.currentMinigame;
     }
@@ -25,9 +25,6 @@ public class PlayerBehaviour : MonoBehaviour
             case StageManager.MinigameType.Bathing:
                 OnBathing();
                 break;
-            case StageManager.MinigameType.Cleaning:
-                OnCleaning();
-                break;
             case StageManager.MinigameType.Walking:
                 //Call Walking minigame functions
                 break;
@@ -35,21 +32,17 @@ public class PlayerBehaviour : MonoBehaviour
     }
     private void OnBathing()
     {
-        _progress = StageManager.Instance.ProgressBarBehaviour;
-        Debug.Log($"Progress: {_progress.GetRawProgress()}");
-
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
+        if(Input.GetButton("Fire1"))
         {
-            heldObject.MoveHeldObject(hit.point);
-            if (hit.collider.TryGetComponent<ObjectiveCheck>(out ObjectiveCheck check))
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit) && heldObject != null)
             {
-                //check.gameObject.SetActive(!(check.objectiveType == heldObject.targetObjective));
+                heldObject.MoveHeldObject(hit.point);
+                if (hit.collider.TryGetComponent<ObjectiveCheck>(out ObjectiveCheck check))
+                {
+                    heldObject.UseHeldObject(check);
+                }
             }
         }
-    }
-    private void OnCleaning()
-    {
-
     }
 }

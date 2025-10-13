@@ -5,33 +5,31 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance { get; private set; }
 
-    public ProgressBehaviour ProgressBarBehaviour { get;  private set; }
+    public ProgressBehaviour ProgressBarBehaviour { get; private set; }
     public enum MinigameType
     {
         None = 0,
         Bathing = 1,
-        Cleaning = 2,
-        Walking = 3
+        Walking = 2
     }
     public MinigameType currentMinigame = MinigameType.None;
+    
+    [SerializeField] private MinigameType lastMinigameBeforeMenu = MinigameType.Walking;
+    
     public ObjectiveCheck[] GetMinigameObjectives()
     {
         return FindObjectsByType<ObjectiveCheck>(FindObjectsInactive.Include, FindObjectsSortMode.None);
     }
+    [SerializeField] private float delayToChangeMinigame = 1.5f;
     public void ChangeMinigame(MinigameType newMinigame)
     {
         currentMinigame = newMinigame;
     }
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(this);
-        }
-        else
+        if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(Instance);
         }
     }
     private void Start()
@@ -41,26 +39,27 @@ public class StageManager : MonoBehaviour
     }
     private IEnumerator MinigameCoroutine()
     {
-
         yield return new WaitForEndOfFrame();
         yield return new WaitUntil(() => ProgressBarBehaviour.IsProgressComplete());
-        NextMinigame();
-        yield break;
-    }
-    public void CheckInstance()
-    {
-        if (currentMinigame != MinigameType.None)
+        yield return new WaitForSeconds(delayToChangeMinigame);
+        if (currentMinigame == lastMinigameBeforeMenu)
         {
-            
+            GameManager.Instance.LevelUp(100f);
+            ChangeToMenuScene();
+            yield return new WaitUntil(() => currentMinigame == MinigameType.None);
+            GameManager.Instance.UiEvent.Invoke();
         }
         else
         {
-            Destroy(this.gameObject);
+            NextMinigame();
+            StartCoroutine(MinigameCoroutine());
         }
+
+        yield break;
     }
     private void NextMinigame()
     {
-        int newMinigameIndex = (int)currentMinigame + 1 > 3 ? 0 : (int)currentMinigame + 1;
+        int newMinigameIndex = (int)currentMinigame + 1 > 2 ? 0 : (int)currentMinigame + 1;
 
         currentMinigame = (MinigameType)newMinigameIndex;
 
@@ -86,16 +85,19 @@ public class StageManager : MonoBehaviour
             case MinigameType.Bathing:
                 sceneChanger.ChangeScene("Minigame Banho");
                 break;
-            case MinigameType.Cleaning:
-                sceneChanger.ChangeScene("Minigame Arrumar");
-                break;
             case MinigameType.Walking:
-                sceneChanger.ChangeScene("Minigame Caminhar");
+                sceneChanger.ChangeScene("RunGameplay");
                 break;
             default:
                 minigame = MinigameType.None;
                 ChangeMinigame(minigame);
                 break;
         }
+    }
+    private void ChangeToMenuScene()
+    {
+        currentMinigame = MinigameType.None;
+
+        ChangeToMinigameScene(currentMinigame);
     }
 }

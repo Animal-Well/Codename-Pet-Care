@@ -1,14 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BathMinigame : MonoBehaviour
 {
     public enum ObjectiveTypes
     {
-        Dirt = 1,
-        Nail = 2,
-        SoapRemains = 3
+        None,
+        Dirt,
+        SoapRemains,
+        WaterRemains
     }
     private ProgressBehaviour _progress;
+
     void Start()
     {
         _progress = StageManager.Instance.ProgressBarBehaviour;
@@ -17,5 +20,6 @@ public class BathMinigame : MonoBehaviour
     private void InitiateBathMinigame()
     {
         StageManager.Instance.currentMinigame = StageManager.MinigameType.Bathing;
+        _progress.ResetProgress();
     }
 }
