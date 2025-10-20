@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Docs/Stylesheets/TitleScreenStyle.uss?fileID=7433441132597879392&amp;guid=ab2847aad599a0148b930681371ae869&amp;type=3#TitleScreenStyle" />
+    <ui:VisualElement name="root">
+        <ui:VisualElement name="top-container" class="container">
+            <ui:VisualElement name="coin-container" class="container">
+                <ui:Button name="coin-btn" class="btn">
+                    <ui:Image name="coin-image" class="image" style="background-position-x: left 0;" />
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="bottom-container" class="container" />
+    </ui:VisualElement>
+</ui:UXML>
