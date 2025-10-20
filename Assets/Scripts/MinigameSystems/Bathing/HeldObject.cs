@@ -22,10 +22,16 @@ public class HeldObject : MonoBehaviour
             }
         }
     }
-    public void MoveHeldObject(Vector3 toPos)
+    public void MoveHeldObject(Ray ray)
     {
-        //toPos.z = StageManager.Instance.currentMinigame == StageManager.MinigameType.Bathing ? 13 : toPos.z;
-        transform.position = toPos;
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            transform.position = hit.point;
+            if (hit.collider.TryGetComponent<ObjectiveCheck>(out ObjectiveCheck check))
+            {
+                UseHeldObject(check);
+            }
+        }
     }
     public void UseHeldObject(ObjectiveCheck usedOn)
     {

@@ -9,7 +9,7 @@ public class ObjectiveCheck : MonoBehaviour
 
     public void ClearObjective()
     {
-        if (objectiveToUnlock != null)
+        if (objectiveToUnlock != null && unlocksNewObjective)
         {
             objectiveToUnlock.SetActive(unlocksNewObjective);
         }

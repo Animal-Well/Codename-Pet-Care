@@ -24,7 +24,7 @@ public class ProgressBehaviour : MonoBehaviour
     public void SetMaxProgress()
     {
         _maxProgress = StageManager.Instance.GetMinigameObjectives().Length;
-        UpdateSlider();
+        _progressSlider.maxValue = _maxProgress;
     }
     public void AdvanceProgress()
     {
@@ -39,7 +39,6 @@ public class ProgressBehaviour : MonoBehaviour
     }
     private void UpdateSlider()
     {
-        _progressSlider.maxValue = _maxProgress;
         _progressSlider.value = _progress;
     }
 }

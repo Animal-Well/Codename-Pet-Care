@@ -19,7 +19,7 @@ public class BathMinigame : MonoBehaviour
     }
     private void InitiateBathMinigame()
     {
-        StageManager.Instance.currentMinigame = StageManager.MinigameType.Bathing;
+        //StageManager.Instance.currentMinigame = StageManager.MinigameType.Bathing;
         _progress.ResetProgress();
     }
 }
