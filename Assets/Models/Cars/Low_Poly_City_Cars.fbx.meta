@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cae2985b74a86344f98a7f524b11bbfd
+guid: 86425ca6dc1da404bb40728e015f7520
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,68 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: black
-    second: {fileID: 2100000, guid: 2e5df542ce6376c47903173f95138b2f, type: 2}
+      name: CAR_01
+    second: {fileID: 2100000, guid: 899a6feeea5dd0d418f354e4e5299817, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: brown
-    second: {fileID: 2100000, guid: efc411f02ea28864b832f9693f094093, type: 2}
+      name: CAR_02
+    second: {fileID: 2100000, guid: a846e049a8a15464692826c8055c3a87, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CAR_03
+    second: {fileID: 2100000, guid: 24716bf02eeda654696e2235c347c45b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CAR_04
+    second: {fileID: 2100000, guid: 0db31929c09cb984988bd82b22abd8d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CAR_05
+    second: {fileID: 2100000, guid: 05e6be8e745858649b8ded878ca3f34d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CAR_06
+    second: {fileID: 2100000, guid: c7a6121c9e407e04d8e4538266dc12bc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CAR_07
+    second: {fileID: 2100000, guid: e065d598fb1456046a15d5cba06ec4d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CAR_08
+    second: {fileID: 2100000, guid: 4b2106877a587754883b25ece00b5b4b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CAR_09
+    second: {fileID: 2100000, guid: 689ab366b5a6e454f813c7b592a859a9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CAR_10
+    second: {fileID: 2100000, guid: a0b402402cf65c44a9c2af538358dcab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CAR_11
+    second: {fileID: 2100000, guid: 23f98ed2198284c4babc838a8e03320e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CAR_12
+    second: {fileID: 2100000, guid: 8fdcc0f9e7a819e43ae36ff29e359593, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat
+    second: {fileID: 2100000, guid: 94cd0ea5fb758ec47a0bef09d39c6ede, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -51,7 +106,7 @@ ModelImporter:
     importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 1
+    importCameras: 0
     importLights: 1
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
@@ -75,7 +130,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
@@ -86,7 +141,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []
