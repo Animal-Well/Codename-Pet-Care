@@ -29,7 +29,7 @@ public class ProgressBehaviour : MonoBehaviour
     public void AdvanceProgress()
     {
         int amount = _progress + 1;
-        if (!(amount > _maxProgress))
+        if (amount <= _maxProgress)
         {
             _progress = amount;
         }

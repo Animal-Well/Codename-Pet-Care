@@ -613,6 +613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 282341759}
   - component: {fileID: 282341760}
+  - component: {fileID: 282341761}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -690,6 +691,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &282341761
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282341758}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cf16137a9de881d4e840ed801ba1dc0a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &322226285
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,7 +1298,7 @@ Transform:
   m_GameObject: {fileID: 873030499}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.2, y: 10.7, z: 16.08}
+  m_LocalPosition: {x: 13.69, y: 8.53, z: 16.08}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1311,7 +1334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1f1ebf9ea3c91c4e95f2a8f9b3d6aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayToChangeMinigame: 1.5
+  delayToChangeMinigame: 2
 --- !u!4 &875725147
 Transform:
   m_ObjectHideFlags: 0
@@ -1801,6 +1824,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1188745940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1188745942}
+  - component: {fileID: 1188745941}
+  m_Layer: 0
+  m_Name: Quad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!64 &1188745941
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188745940}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1188745942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188745940}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.36, y: 11.76, z: 15.36}
+  m_LocalScale: {x: 12.175236, y: 8.860434, z: 12.175236}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1320181420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1965,8 +2042,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectiveType: 3
+  OnDestroyEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1656336594}
+        m_TargetAssemblyTypeName: ObjectiveCheck, Assembly-CSharp
+        m_MethodName: CallCoroutine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   unlocksNewObjective: 0
+  _finalObjective: 1
   objectiveToUnlock: {fileID: 0}
+  lastHoldable: {fileID: 1184721193}
+  dogAnimator: {fileID: 282341761}
 --- !u!65 &1656336595
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2298,8 +2393,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectiveType: 1
+  OnDestroyEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1947322331}
+        m_TargetAssemblyTypeName: ObjectiveCheck, Assembly-CSharp
+        m_MethodName: CallCoroutine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   unlocksNewObjective: 1
+  _finalObjective: 0
   objectiveToUnlock: {fileID: 4974287390636421738}
+  lastHoldable: {fileID: 0}
+  dogAnimator: {fileID: 0}
 --- !u!65 &1947322332
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3163,8 +3276,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectiveType: 2
+  OnDestroyEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2874343824847517160}
+        m_TargetAssemblyTypeName: ObjectiveCheck, Assembly-CSharp
+        m_MethodName: CallCoroutine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   unlocksNewObjective: 1
+  _finalObjective: 0
   objectiveToUnlock: {fileID: 1656336593}
+  lastHoldable: {fileID: 0}
+  dogAnimator: {fileID: 0}
 --- !u!4 &2878637888352459294
 Transform:
   m_ObjectHideFlags: 0
@@ -3636,6 +3767,7 @@ SceneRoots:
   - {fileID: 2878637888352459294}
   - {fileID: 1656336596}
   - {fileID: 1947322333}
+  - {fileID: 1188745942}
   - {fileID: 873030500}
   - {fileID: 1866817364}
   - {fileID: 1768049618}

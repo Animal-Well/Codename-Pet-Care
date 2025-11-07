@@ -37,7 +37,7 @@ public class HeldObject : MonoBehaviour
     {
         if (usedOn.objectiveType == targetObjective)
         {
-            usedOn.ClearObjective();
+            usedOn.OnDestroyEvent.Invoke();
         }
     }
     public void ChangeObjective(string objectiveName)
